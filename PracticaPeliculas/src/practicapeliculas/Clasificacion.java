@@ -14,7 +14,7 @@ import java.io.File;
 public class Clasificacion {
     
     public void actualizar(){
-        int hola;
+      
     }
     
     public void visualizar(){
