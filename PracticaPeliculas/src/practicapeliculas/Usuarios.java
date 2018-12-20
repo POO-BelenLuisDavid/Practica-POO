@@ -5,6 +5,7 @@
  */
 package practicapeliculas;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -13,36 +14,36 @@ import java.util.Scanner;
  */
 public class Usuarios {
     
-    //Usuario u;
-    
-    public void autentica(Usuario u){
-        
-        
-        String usu = "";
-        String contra = "";
-        Scanner usuario = new Scanner(System.in);
-        Scanner contrasena = new Scanner(System.in);
-        usu = usuario.nextLine();
-        contra = contrasena.nextLine();
-        
-        if ((usu.equals()) || (contra.equals())){ //falta meter los String de los usuarios y las contraseñas registradas
-            System.out.print("Sesion iniciada");
+     private static ArrayList<Usuario> usuarios; 
+     
+     public Usuarios(){  
+         usuarios = new ArrayList<Usuario>(); 
+     }
+  
+     
+     public ArrayList<Usuario> getUsuarios(){
+         return usuarios;
+     }
+     public Usuario autenticar() {
+        Scanner entrada = new Scanner(System.in);
+        System.out.print("Usuario: ");
+        String login = entrada.nextLine();
+        System.out.print("Password: ");
+        String pass = entrada.nextLine();
+        for (Usuario u : usuarios) {
+            if (u.getNick().equals(login) && u.getClave().equals(pass)) {
+                return u;
+            }
         }
-        else{
-            System.out.print("Usuario incorrecto");
+        return null;
+    }
+     
+    public boolean registrar(Usuario nuevo) {
+        boolean sePuede = false;
+        if (!usuarios.contains(nuevo)) {
+            this.usuarios.add(nuevo);
+            sePuede = true;
         }
-        
-        
+        return sePuede;
     }
-    
-    public void registrar(Usuario u){
-        
-        String usu = "";
-        String contra = "";
-        Scanner usuario = new Scanner(System.in);
-        Scanner contrasena = new Scanner(System.in);
-        usu = usuario.nextLine();
-        contra = contrasena.nextLine();
-    }
-    
 }

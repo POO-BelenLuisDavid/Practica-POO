@@ -5,15 +5,19 @@
  */
 package practicapeliculas;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Acer
  */
-public class Usuario {
-StringBuilder muro;
+public class Usuario implements Serializable{
+    
+    StringBuilder muro;
     int partidas_ganadas, partidas_perdidas, partidas_empatadas;
     Partida partidas_completas[], partidas_pendiente[];
-    Usuario solicitudes_amigos_penndientes[];
+    Usuario solicitudes_amigos_pendientes[]=new Usuario[10];
+    //Usuario solicitudes_amigos_pendientes[]={};
     
     String nick;
     String clave;
@@ -51,15 +55,23 @@ StringBuilder muro;
     public String toString () {
         return "Nick: "+this.nick;
     }
+    
     public void invitarAmigo(Usuario u){
-        
+       System.out.println("Comemela, Luis \n");
+        for(int i =0; i<u.solicitudes_amigos_pendientes.length; i++){
+            if(u.solicitudes_amigos_pendientes[i]==null){
+                u.solicitudes_amigos_pendientes[i]=this;
+                System.out.println("Solicitud enviada\n");
+                break;
+            }
+        }
     }
     
     public void aceptarInvitacion(Usuario u){
         
     }
     
-    public void rechazarInvitacio(Usuario u){
+    public void rechazarInvitacion(Usuario u){
     }
     
     public void compartirPelicula(Pelicula p){
@@ -110,5 +122,6 @@ StringBuilder muro;
     public void setMuro(StringBuilder s){
         
     }
+
 
 }

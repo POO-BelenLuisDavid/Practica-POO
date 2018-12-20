@@ -11,12 +11,12 @@ package practicapeliculas;
  */
 public interface Compartible {
     
-    public abstract compartir(Usuario u){
+   // public abstract compartir(Usuario u){
         
-    }
     
-    public abstract compartir(Usuario[] users){
+    
+   // public abstract compartir(Usuario[] users){
         
-    }
+    //}
     
 }
