@@ -10,19 +10,47 @@ package practicapeliculas;
  * @author Acer
  */
 public class Usuario {
-    
-    StringBuilder muro;
+StringBuilder muro;
     int partidas_ganadas, partidas_perdidas, partidas_empatadas;
     Partida partidas_completas[], partidas_pendiente[];
     Usuario solicitudes_amigos_penndientes[];
     
-    public Usuario(int partidas_ganadas, int partidas_perdidas, int partidas_empatadas){
+    String nick;
+    String clave;
+    
+    public Usuario(String nick, String clave, int partidas_ganadas, int partidas_perdidas, int partidas_empatadas){
+        this.nick = nick;
+        this.clave = clave;
         this.partidas_ganadas=partidas_ganadas;
         this.partidas_perdidas=partidas_perdidas;
         this.partidas_empatadas=partidas_empatadas;
     }
+
     
+    public String getNick() {
+        return nick;
+    }
     
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+    
+    public String getClave() {
+        return clave;
+    }
+    
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+    
+    public boolean equals (Usuario u){
+        return this.nick.equals(u.nick);
+    }
+    
+    @Override
+    public String toString () {
+        return "Nick: "+this.nick;
+    }
     public void invitarAmigo(Usuario u){
         
     }
