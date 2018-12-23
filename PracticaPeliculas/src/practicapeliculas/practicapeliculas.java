@@ -6,6 +6,7 @@
 package practicapeliculas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -24,17 +25,14 @@ public class practicapeliculas implements Serializable{
      */
     
     private static void acceder (){
-        
-       Usuario u; 
-       
+       Usuario u;  
         do{
             u = usuarios.autenticar ();
             if (u==null) {
                System.out.println ("Por favor, introduzca unos credeciales correctos");
             }
-        }while (u==null);
-        
-        System.out.println("Bienvenido");
+        }while (u==null);  
+        System.out.print ("Bienvenido");
         opciones_perfil(u);
     }
     private static void crearUsuario() {
@@ -59,8 +57,6 @@ public class practicapeliculas implements Serializable{
     
     private static void opciones_perfil(Usuario u){
         Scanner entrada = new Scanner (System.in);
-        
-        System.out.println("--------------------------------");
         System.out.println("¿Qué deseas hacer?");
         System.out.println(" 1. Mis amigos\n 2. Películas\n 3. Trivial\n 4. Muro\n 5. Cerrar sesión");
         System.out.print ("Opcion: ");
@@ -78,44 +74,74 @@ public class practicapeliculas implements Serializable{
             case 5: Cerrar_Sesion(u);
                     break;
             default: System.out.println ("Opcion no reconocida");
-                    opciones_perfil(u);
-                    break;
         } 
     }
     
     private static void funciones_Amigos(Usuario u){
-        
-        System.out.println("--------------------------------");
         Scanner entrada = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
-        System.out.println(" 1. Agregar amigo\n 2. Solicitudes\n");
+        System.out.println(" 1. Agregar amigo/Ver solicitudes enviadas\n 2. Solicitudes recibidas\n 3. Cerrar Sesion\n");
         System.out.print ("Opcion: ");
         int opcion= entrada.nextInt(); 
         
         switch (opcion){
             case 1: 
-                boolean encontrado= false;
-                    Scanner entrada2 = new Scanner (System.in);
-                    System.out.println("Nick de tu amigo: ");
-                    String nombreAmigo= entrada2.nextLine();
+                Scanner entrada2 = new Scanner (System.in);
+                System.out.println("¿Qué deseas hacer?");
+                System.out.println(" 1. Enviar invitacion a un amigo\n 2. Ver las solicitudes\n 3. Volver\n");
+                System.out.print ("Opcion: ");
+                int opcion2= entrada2.nextInt();
+                switch (opcion2){
+                    case 1:
+                        boolean encontrado= false;
+                        Scanner entrada3 = new Scanner (System.in);
+                        System.out.println("Nick de tu amigo: ");
+                        String nombreAmigo= entrada3.nextLine();
                     
-                    for(Usuario usu: usuarios.getUsuarios()){
-                        if(usu.getNick().equals(nombreAmigo));
-                            u.invitarAmigo(usu);
-                            encontrado=true;
-                            break;
+                            for(Usuario usu: usuarios.getUsuarios()){
+                                if(usu.getNick().equals(nombreAmigo)){
+                                    u.invitarAmigo(usu);
+                                    encontrado=true;
+                                    break;
+                            }
+                            }
+                            if(!encontrado){
+                                System.out.println("No existen usuarios con ese nombre\n");
+                            }
+                            funciones_Amigos(u);
+                    case 2:
+                        u.invitarAmigo(null);
+                        funciones_Amigos(u);
+                    
+                    case 3:
+                        funciones_Amigos(u);                       
+                }
+                  
+            case 2: 
+                    System.out.println("Accediendo a tus solicitudes\n Tus solicitudes recibidas son:\n");
+                    /*for(int i=0; i<solicitudes_recibidas.length; i++){
+                        System.out.println(solicitudes_recibidas[i].getNick);
                     }
-                    if(!encontrado){
-                        System.out.println("No tienes amigos\n");
+                    */
+                    System.out.println("¿Qué deseas hacer?\n 1:Aceptar/Rechazar\n 2:Volver\n");
+                    Scanner entrada3 = new Scanner (System.in);
+                    System.out.print ("Opcion: ");
+                    int solicitud= entrada3.nextInt();
+                    switch(solicitud){
+                            case 1:
+                                u.aceptarInvitacion(u);
+                                break;
+                            case 2: 
+                                funciones_Amigos(u);
+                                break;
+                            default: System.out.println ("Opcion no reconocida");
+                                Cerrar_Sesion(u);
                     }
+            case 3: Cerrar_Sesion(u);
                     break;
-                    
-            //case 2: solicitudes(u);
-              //      break;
-            default: System.out.println ("Opcion no reconocida");
-        } 
-    }
-    
+        }
+    }                         
+
     private static void funciones_Peliculas(Usuario u){
         
         System.out.println("--------------------------------");
@@ -182,6 +208,7 @@ public class practicapeliculas implements Serializable{
         }
     }
     
+
     public static void modo_comparticion(Usuario u,Pelicula p){
         
         System.out.println("--------------------------------");
@@ -190,7 +217,7 @@ public class practicapeliculas implements Serializable{
         int seleccion= entrada8.nextInt();
         switch(seleccion){
             case 1: System.out.println("Compartiendo pelicula");
-                    u.anadirPelicula(p);
+                    u.compartirPelicula(p);
                     break;
             case 2: boolean encontrado= false;
                     Scanner entrada2 = new Scanner (System.in);
@@ -213,23 +240,24 @@ public class practicapeliculas implements Serializable{
                     break;
         }
     }
-    
+
+
     private static void funciones_Trivial(Usuario u){
-        
-        System.out.println("--------------------------------");
+        System.out.println("Chupamela luis");
     }
     
     private static void funciones_Muro(Usuario u){
-        
-        System.out.println("--------------------------------");
+        System.out.println("Chupamela luis");
     }
     
-    private static void Cerrar_Sesion(Usuario u){
+    
+     private static void Cerrar_Sesion(Usuario u){
         
         System.out.println("--------------------------------");
         Scanner entrada3 = new Scanner (System.in);
         System.out.println("¿Desea cerrar sesión?");
-        System.out.println("1. Si\n 2.No\n");
+        System.out.println(" 1.Si\n 2.No\n");
+        System.out.print ("Opcion: ");
         int numero=entrada3.nextInt();
         
         switch(numero){
@@ -247,9 +275,7 @@ public class practicapeliculas implements Serializable{
         
     }
     
-    
     private static void tratarOpcion(int opcion) {
-        System.out.println("--------------------------------");
         
         switch (opcion) {
             
@@ -265,7 +291,8 @@ public class practicapeliculas implements Serializable{
         }
     }
     
-    public static void Inicio_Sesion(){
+    
+     public static void Inicio_Sesion(){
         int opcion;
         System.out.println ("¿Qué deseas hacer?");
         System.out.println ("1- Acceder // 2- Registrarse");
@@ -277,6 +304,7 @@ public class practicapeliculas implements Serializable{
        if(opcion!=0)
             tratarOpcion (opcion);
     }
+     
     public static void main(String[] args) {
         // TODO code application logic here
             

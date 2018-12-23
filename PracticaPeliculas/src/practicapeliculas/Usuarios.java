@@ -19,11 +19,10 @@ public class Usuarios {
      public Usuarios(){  
          usuarios = new ArrayList<Usuario>(); 
      }
-  
-     
      public ArrayList<Usuario> getUsuarios(){
          return usuarios;
      }
+     
      public Usuario autenticar() {
         Scanner entrada = new Scanner(System.in);
         System.out.print("Usuario: ");
