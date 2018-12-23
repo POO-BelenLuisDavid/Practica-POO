@@ -6,7 +6,6 @@
 package practicapeliculas;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -35,8 +34,7 @@ public class practicapeliculas implements Serializable{
             }
         }while (u==null);
         
-        System.out.print ("Bienvenido");
-        
+        System.out.println("Bienvenido");
         opciones_perfil(u);
     }
     private static void crearUsuario() {
@@ -61,6 +59,8 @@ public class practicapeliculas implements Serializable{
     
     private static void opciones_perfil(Usuario u){
         Scanner entrada = new Scanner (System.in);
+        
+        System.out.println("--------------------------------");
         System.out.println("¿Qué deseas hacer?");
         System.out.println(" 1. Mis amigos\n 2. Películas\n 3. Trivial\n 4. Muro\n 5. Cerrar sesión");
         System.out.print ("Opcion: ");
@@ -78,10 +78,14 @@ public class practicapeliculas implements Serializable{
             case 5: Cerrar_Sesion(u);
                     break;
             default: System.out.println ("Opcion no reconocida");
+                    opciones_perfil(u);
+                    break;
         } 
     }
     
     private static void funciones_Amigos(Usuario u){
+        
+        System.out.println("--------------------------------");
         Scanner entrada = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
         System.out.println(" 1. Agregar amigo\n 2. Solicitudes\n");
@@ -113,23 +117,139 @@ public class practicapeliculas implements Serializable{
     }
     
     private static void funciones_Peliculas(Usuario u){
-        System.out.println("Chupamela luis");
+        
+        System.out.println("--------------------------------");
+        Pelicula p;
+        Scanner entrada4 = new Scanner (System.in);
+        System.out.println("¿Qué deseas hacer?");
+        System.out.println(" 1. Agregar película\n 2. Compartir película\n 3. Listado de películas\n");
+        System.out.print ("Opcion: ");
+        int opcion= entrada4.nextInt(); 
+        
+        switch (opcion){
+            case 1: Scanner entrada5 = new Scanner (System.in);
+                    System.out.print ("Dime el titulo: ");
+                    String titulo = entrada5.nextLine();
+                    System.out.print ("Dime el nombre del director: ");
+                    String director = entrada5.nextLine();
+                    System.out.print ("Dime el genero: ");
+                    String genero = entrada5.nextLine();
+                    System.out.print ("Dime el actor principal: ");
+                    String actor = entrada5.nextLine();
+                    System.out.print ("Dime el actriz principal: ");
+                    String actriz = entrada5.nextLine();
+                    System.out.print ("Dime el año: ");
+                    int año = entrada5.nextInt();
+                    Pelicula pelicula= new Pelicula(titulo,director,genero,actor,actriz,año);
+                    u.anadirPelicula(pelicula);
+                    opciones_perfil(u);
+                    break;
+            case 2: Scanner entrada6 = new Scanner (System.in);
+                    System.out.println("¿De qué modo desea compartir?");
+                    System.out.println("1. Compartir pelicula\n 2. Compartir todo\n");
+                    int opcion_compartir=entrada6.nextInt();
+                    switch(opcion_compartir){
+                        case 1:  Scanner entrada7 = new Scanner (System.in);
+                                System.out.print ("Dime el titulo: ");
+                                String t = entrada7.nextLine();
+                                System.out.print ("Dime el nombre del director: ");
+                                String d = entrada7.nextLine();
+                                System.out.print ("Dime el genero: ");
+                                String g = entrada7.nextLine();
+                                System.out.print ("Dime el actor principal: ");
+                                String a = entrada7.nextLine();
+                                System.out.print ("Dime el actriz principal: ");
+                                String az = entrada7.nextLine();
+                                System.out.print ("Dime el año: ");
+                                int añ = entrada7.nextInt();
+                                Pelicula pe= new Pelicula(t,d,g,a,az,añ);
+                                
+                               modo_comparticion(u,pe);
+                                  
+                        case 2: //aqui tambien hay que meter una critica.
+                        default:System.out.println("Por favor, seleccione una opción correcta");
+                                funciones_Peliculas(u);
+                                break;
+                            
+                    }
+                    
+                    break;
+            case 3: u.peliculas.verInfoPeliculas();
+                    break;
+            default: System.out.println("Por favor, seleccione una opción correcta");
+                    funciones_Peliculas(u);
+                    break;
+        }
+    }
+    
+    public static void modo_comparticion(Usuario u,Pelicula p){
+        
+        System.out.println("--------------------------------");
+        Scanner entrada8= new Scanner(System.in);
+        System.out.println("Desea compartir la película con: 1. Todos\n 2. Un amigo\n");
+        int seleccion= entrada8.nextInt();
+        switch(seleccion){
+            case 1: System.out.println("Compartiendo pelicula");
+                    u.anadirPelicula(p);
+                    break;
+            case 2: boolean encontrado= false;
+                    Scanner entrada2 = new Scanner (System.in);
+                    System.out.println("Nick de tu amigo: ");
+                    String nombreA= entrada2.nextLine();
+
+                    for(Usuario usu: usuarios.getUsuarios()){
+                        if(usu.getNick().equals(nombreA));
+                            System.out.print("Compartiendo pelicula\n");
+                            u.compartirPelicula(p, usu);
+                            encontrado=true;
+                            break;
+                    }
+                    if(!encontrado){
+                        System.out.println("No tienes amigos con ese nick\n");
+                    }
+                    break;
+            default: System.out.println("Por favor, seleccione una opción correcta");
+                      modo_comparticion(u,p);
+                    break;
+        }
     }
     
     private static void funciones_Trivial(Usuario u){
-        System.out.println("Chupamela luis");
+        
+        System.out.println("--------------------------------");
     }
     
     private static void funciones_Muro(Usuario u){
-        System.out.println("Chupamela luis");
+        
+        System.out.println("--------------------------------");
     }
     
     private static void Cerrar_Sesion(Usuario u){
-        System.out.println("Chupamela luis");
+        
+        System.out.println("--------------------------------");
+        Scanner entrada3 = new Scanner (System.in);
+        System.out.println("¿Desea cerrar sesión?");
+        System.out.println("1. Si\n 2.No\n");
+        int numero=entrada3.nextInt();
+        
+        switch(numero){
+            case 1:    System.out.println("Cerrando sesión...");
+                        Inicio_Sesion();
+                        break;
+            case 2:     System.out.println("Cancelando cierre de sesión");
+                        opciones_perfil(u);
+                        break;
+            default:    System.out.println("Por favor, seleccione una opción correcta");
+                        Cerrar_Sesion(u);
+                        break;
+                        
+        }
+        
     }
     
     
     private static void tratarOpcion(int opcion) {
+        System.out.println("--------------------------------");
         
         switch (opcion) {
             
@@ -144,14 +264,9 @@ public class practicapeliculas implements Serializable{
             default: System.out.println ("Opcion no reconocida");
         }
     }
-    public static void main(String[] args) {
-        // TODO code application logic here
+    
+    public static void Inicio_Sesion(){
         int opcion;
-      
-        
-        usuarios.registrar(admin);
-        usuarios.registrar(admin2);
-        
         System.out.println ("¿Qué deseas hacer?");
         System.out.println ("1- Acceder // 2- Registrarse");
         
@@ -161,5 +276,14 @@ public class practicapeliculas implements Serializable{
         
        if(opcion!=0)
             tratarOpcion (opcion);
+    }
+    public static void main(String[] args) {
+        // TODO code application logic here
+            
+        
+        usuarios.registrar(admin);
+        usuarios.registrar(admin2);
+        
+        Inicio_Sesion();
     }
 }

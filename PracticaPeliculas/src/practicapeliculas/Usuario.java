@@ -14,13 +14,16 @@ import java.io.Serializable;
 public class Usuario implements Serializable{
     
     StringBuilder muro;
+    Peliculas peliculas = new Peliculas();
+    int N= 10;
+    
     int partidas_ganadas, partidas_perdidas, partidas_empatadas;
     Partida partidas_completas[], partidas_pendiente[];
-    Usuario solicitudes_amigos_pendientes[]=new Usuario[10];
-    //Usuario solicitudes_amigos_pendientes[]={};
-    
+    Usuario solicitudes_amigos_pendientes[]=new Usuario[N];
     String nick;
     String clave;
+    
+    
     
     public Usuario(String nick, String clave, int partidas_ganadas, int partidas_perdidas, int partidas_empatadas){
         this.nick = nick;
@@ -57,7 +60,6 @@ public class Usuario implements Serializable{
     }
     
     public void invitarAmigo(Usuario u){
-       System.out.println("Comemela, Luis \n");
         for(int i =0; i<u.solicitudes_amigos_pendientes.length; i++){
             if(u.solicitudes_amigos_pendientes[i]==null){
                 u.solicitudes_amigos_pendientes[i]=this;
@@ -105,11 +107,13 @@ public class Usuario implements Serializable{
     }
     
     public void anadirPelicula(Pelicula p){
-        
+         
+         peliculas.anadirPeliculas(p);
+         System.out.println("Pelicula añadida");
     }
     
     public void anadirCritica(Critica c, Pelicula p){
-        
+       
     }
     
     

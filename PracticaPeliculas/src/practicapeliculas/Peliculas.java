@@ -5,20 +5,30 @@
  */
 package practicapeliculas;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Acer
  */
 public class Peliculas {
     
-    Pelicula p;
+    private ArrayList<Pelicula> peliculas= new ArrayList<Pelicula>();
     
     public void anadirPeliculas(Pelicula p){
+        if(peliculas.contains(p)){
+            System.out.println("La película ya existe");
+        }else{
+            peliculas.add(p);
+        }
         
     }
     
     public void verInfoPeliculas(){
-        
+        for(Pelicula p:peliculas){
+            System.out.println(p);
+            System.out.println("--------------------------------");
+        }
     }
     
 }
