@@ -80,7 +80,7 @@ public class practicapeliculas implements Serializable{
     private static void funciones_Amigos(Usuario u){
         Scanner entrada = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
-        System.out.println(" 1. Agregar amigo/Ver solicitudes enviadas\n 2. Solicitudes recibidas\n 3. Cerrar Sesion\n");
+        System.out.println(" 1. Agregar amigo/Ver solicitudes enviadas\n 2. Solicitudes recibidas\n 3. Volver\n");
         System.out.print ("Opcion: ");
         int opcion= entrada.nextInt(); 
         
@@ -88,7 +88,7 @@ public class practicapeliculas implements Serializable{
             case 1: 
                 Scanner entrada2 = new Scanner (System.in);
                 System.out.println("¿Qué deseas hacer?");
-                System.out.println(" 1. Enviar invitacion a un amigo\n 2. Ver las solicitudes\n 3. Volver\n");
+                System.out.println(" 1. Enviar invitacion a un amigo\n 2. Ver las solicitudes y los amigos\n 3. Volver\n");
                 System.out.print ("Opcion: ");
                 int opcion2= entrada2.nextInt();
                 switch (opcion2){
@@ -118,11 +118,7 @@ public class practicapeliculas implements Serializable{
                 }
                   
             case 2: 
-                    System.out.println("Accediendo a tus solicitudes\n Tus solicitudes recibidas son:\n");
-                    /*for(int i=0; i<solicitudes_recibidas.length; i++){
-                        System.out.println(solicitudes_recibidas[i].getNick);
-                    }
-                    */
+                    System.out.println("Accediendo a tus solicitudes\n");
                     System.out.println("¿Qué deseas hacer?\n 1:Aceptar/Rechazar\n 2:Volver\n");
                     Scanner entrada3 = new Scanner (System.in);
                     System.out.print ("Opcion: ");
@@ -135,9 +131,9 @@ public class practicapeliculas implements Serializable{
                                 funciones_Amigos(u);
                                 break;
                             default: System.out.println ("Opcion no reconocida");
-                                Cerrar_Sesion(u);
+                                opciones_perfil(u);
                     }
-            case 3: Cerrar_Sesion(u);
+            case 3: opciones_perfil(u);
                     break;
         }
     }                         

@@ -86,7 +86,10 @@ public class Usuario implements Serializable{
                 if(this.solicitudes_amigos_pendientes[i]==null){
                     this.solicitudes_amigos_pendientes[i]=u;
                     for(int k=0; k<u.solicitudes_recibidas.length; k++){
-                        u.solicitudes_recibidas[k]=this;
+                        if(u.solicitudes_recibidas[k]==null){
+                            u.solicitudes_recibidas[k]=this;
+                            break;
+                        }   
                     }
                     System.out.println("Solicitud enviada");
                     break;
@@ -94,7 +97,7 @@ public class Usuario implements Serializable{
             }          
         }
         else{
-        System.out.println(" 1.Ver solicitudes pendientes\n 2.Ver solicitudes rechazadas\n 3.Volver al menú principal");
+        System.out.println(" 1.Ver solicitudes pendientes\n 2.Ver solicitudes rechazadas\n 3.Listado de amigos\n 4.Volver");
         System.out.print ("Opcion: ");
         Scanner entrada = new Scanner (System.in);
         int numero=entrada.nextInt();
@@ -103,37 +106,101 @@ public class Usuario implements Serializable{
                             for(int j =0; j<this.solicitudes_amigos_pendientes.length; j++){
                                 if(this.solicitudes_amigos_pendientes[j]!=null){
                                     System.out.println(solicitudes_amigos_pendientes[j].getNick()); 
+                                    //break;
+                                }//aqui quiero poner un else por si no hay invitaciones pendientes ponerlo
+                                // en plan else{ System.out.print("No tienes invitaciones pendientes de ser contestadas"
+                            }
+                            break;
+                case 2:     System.out.println("Mis solicitudes enviadas rechazadas son:");
+                            for(int j =0; j<this.solicitudes_rechazadas.length; j++){
+                                if(this.solicitudes_rechazadas[j]!=null){
+                                    System.out.println(solicitudes_rechazadas[j].getNick()); 
                                     break;
                                 }
                                 else{
-                                    System.out.println("No tienes solicitudes enviadas pendientes");
+                                    System.out.println("No tienes solicitudes rechazadas");
                                     break;
                                 }
                             }
                             break;
-                case 2:     System.out.println("Mis solicitudes enviadas pendientes son:");
-
+                case 3:    System.out.println("Mis amigos son:");       
+                            int cont=0;
+                            for(int i=0; i<this.mis_amigos.length; i++){
+                                if(this.mis_amigos[i]!=null){
+                                    cont++;
+                                    System.out.println(cont+ ".-" + this.mis_amigos[i].getNick());  
+                                    break;
+                                }                 
+                            }
+                            System.out.println("------------------");
                             break;
-                case 3:    System.out.println("Volviendo al menú");                        
+                case 4:    System.out.println("Volviendo al menú");                        
                             break;                       
             } 
         } 
     }
    
     public void aceptarInvitacion(Usuario u){
-        for(int i=0; i<this.solicitudes_recibidas.length; i++){
-            System.out.println(solicitudes_recibidas[i].getNick());     
-            break;
-        }
         
-        System.out.println("1.Aceptar\n 2.Rechazar\n 3.Volver");
+        System.out.println("Estas son las solicitudes de amistad recibidas pendientes:");
+        System.out.println("(Recuerda que se aceptan o rechazan a los usuarios por orden)");
+        int cont=0;
+        for(int i=0; i<this.solicitudes_recibidas.length; i++){
+            if(this.solicitudes_recibidas[i]!=null){
+                cont++;
+                System.out.println(cont+ ".-" + solicitudes_recibidas[i].getNick());  
+            }                 
+        }
+        System.out.println("------------------");
+        
+        System.out.println(" 1.Aceptar\n 2.Rechazar\n 3.Volver");
         System.out.print ("Opcion: ");
         Scanner entrada = new Scanner (System.in);
         int numero=entrada.nextInt();
             switch(numero){
                 case 1:
                     //Aceptar
-                
+                    for(int i =0; i<this.solicitudes_recibidas.length; i++){
+                        if(this.solicitudes_recibidas[i]!=null){
+                            this.mis_amigos[i]=u;
+                            for(int k=0; k<u.mis_amigos.length; k++){
+                                if(u.mis_amigos[k]==null){
+                                    u.solicitudes_recibidas[k]=this;
+                                    break;
+                                }   
+                            }
+                            System.out.println("Solicitud enviada");
+                            break;
+                        }
+                    }
+                    //for(int i=0; i<this.solicitudes_recibidas.length; i++){
+                        //if(this.solicitudes_recibidas[i]!=null){
+                           // this.mis_amigos[i]=this.solicitudes_recibidas[i]; 
+                           // u.mis_amigos[0]= this;
+                            /*for(int j=0; j<u.mis_amigos.length; j++){
+                                if(u.mis_amigos[j]==null){
+                                    u.mis_amigos[j]=this;
+                                    break;
+                                }
+                                    
+                                    /*if(u.solicitudes_amigos_pendientes[j+1]!=null){
+                                        u.solicitudes_amigos_pendientes[j]= u.solicitudes_amigos_pendientes[j+1];
+                                    }else{
+                                        u.solicitudes_amigos_pendientes[j]=null;
+                                    } 
+                                }
+                                
+                            }/*
+                            this.solicitudes_recibidas[i]=this.solicitudes_recibidas[i+1];
+                            /*for(int j=0; j<u.solicitudes_amigos_pendientes.length; j++){
+                                if(u.solicitudes_amigos_pendientes==this.solicitudes_recibidas){
+                                    
+                                }
+                            }*/
+                        //}
+                    
+                    System.out.println("Solicitud aceptada\n");
+                    //aceptarInvitacion(u);
                 case 2: 
                     rechazarInvitacion(u);
                     break;
@@ -141,12 +208,9 @@ public class Usuario implements Serializable{
                 case 3: 
                     System.out.println("Volviendo al menú");                        
                     break; 
-            }
-        
-   
-        System.out.println("Solicitud aceptada\n");
-        
+            }  
     }
+    
     
     public void rechazarInvitacion(Usuario u){
         //Rechazar
