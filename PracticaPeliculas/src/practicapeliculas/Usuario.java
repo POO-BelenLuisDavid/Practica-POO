@@ -17,15 +17,15 @@ import java.util.Scanner;
 public class Usuario implements Serializable{
     
     int N=10;
-    StringBuilder muro;
+    StringBuilder muro= new StringBuilder();
     Peliculas peliculas = new Peliculas();
     int partidas_ganadas, partidas_perdidas, partidas_empatadas;
     Partida partidas_completas[], partidas_pendiente[];
    
-    Usuario solicitudes_amigos_pendientes[]=new Usuario[N];//solicitudes que yo envío   
-    Usuario mis_amigos[]=new Usuario[N]; //solicitudes que me han aceptado y que he aceptado yo
-    Usuario solicitudes_rechazadas[]=new Usuario[N];// solicitudes que yo envío y me rechazan
-    Usuario solicitudes_recibidas[]=new Usuario[N];// solicitudes que me han enviado
+    Usuario solicitudes_amigos_pendientes[]=new Usuario[N];//solicitudes que yo recibo   
+    ArrayList<Usuario> mis_amigos=new ArrayList<Usuario>(); //solicitudes que me han aceptado y que he aceptado yo
+    //Usuario solicitudes_rechazadas[]=new Usuario[N];// solicitudes que yo envío y me rechazan
+    //Usuario solicitudes_recibidas[]=new Usuario[N];// solicitudes que me han enviado
     
     
     //private static ArrayList<Usuario>solicitudes_recibidas; //solicitues que me han hecho
@@ -76,161 +76,94 @@ public class Usuario implements Serializable{
     
     @Override
     public String toString () {
-        return "Nick: "+this.nick;
+        return "Nick: "+this.nick+"\n";
     }
     
     public void invitarAmigo(Usuario u){
         
         if(u!=null){
             for(int i =0; i<this.solicitudes_amigos_pendientes.length; i++){
-                if(this.solicitudes_amigos_pendientes[i]==null){
-                    this.solicitudes_amigos_pendientes[i]=u;
-                    for(int k=0; k<u.solicitudes_recibidas.length; k++){
-                        if(u.solicitudes_recibidas[k]==null){
-                            u.solicitudes_recibidas[k]=this;
-                            break;
-                        }   
-                    }
+                if(u.solicitudes_amigos_pendientes[i]==null){
+                    u.solicitudes_amigos_pendientes[i]=this;
                     System.out.println("Solicitud enviada");
                     break;
                 }
             }          
         }
-        else{
-        System.out.println(" 1.Ver solicitudes pendientes\n 2.Ver solicitudes rechazadas\n 3.Listado de amigos\n 4.Volver");
-        System.out.print ("Opcion: ");
-        Scanner entrada = new Scanner (System.in);
-        int numero=entrada.nextInt();
-            switch(numero){
-                case 1:     System.out.println("Solicitudes pendientes:");
-                            for(int j =0; j<this.solicitudes_amigos_pendientes.length; j++){
-                                if(this.solicitudes_amigos_pendientes[j]!=null){
-                                    System.out.println(solicitudes_amigos_pendientes[j].getNick()); 
-                                    //break;
-                                }//aqui quiero poner un else por si no hay invitaciones pendientes ponerlo
-                                // en plan else{ System.out.print("No tienes invitaciones pendientes de ser contestadas"
-                            }
-                            break;
-                case 2:     System.out.println("Mis solicitudes enviadas rechazadas son:");
-                            for(int j =0; j<this.solicitudes_rechazadas.length; j++){
-                                if(this.solicitudes_rechazadas[j]!=null){
-                                    System.out.println(solicitudes_rechazadas[j].getNick()); 
-                                    break;
-                                }
-                                else{
-                                    System.out.println("No tienes solicitudes rechazadas");
-                                    break;
-                                }
-                            }
-                            break;
-                case 3:    System.out.println("Mis amigos son:");       
-                            int cont=0;
-                            for(int i=0; i<this.mis_amigos.length; i++){
-                                if(this.mis_amigos[i]!=null){
-                                    cont++;
-                                    System.out.println(cont+ ".-" + this.mis_amigos[i].getNick());  
-                                    break;
-                                }                 
-                            }
-                            System.out.println("------------------");
-                            break;
-                case 4:    System.out.println("Volviendo al menú");                        
-                            break;                       
-            } 
-        } 
     }
    
     public void aceptarInvitacion(Usuario u){
+       
         
-        System.out.println("Estas son las solicitudes de amistad recibidas pendientes:");
-        System.out.println("(Recuerda que se aceptan o rechazan a los usuarios por orden)");
-        int cont=0;
-        for(int i=0; i<this.solicitudes_recibidas.length; i++){
-            if(this.solicitudes_recibidas[i]!=null){
-                cont++;
-                System.out.println(cont+ ".-" + solicitudes_recibidas[i].getNick());  
-            }                 
-        }
-        System.out.println("------------------");
-        
-        System.out.println(" 1.Aceptar\n 2.Rechazar\n 3.Volver");
+        System.out.println("1.Aceptar\n 2.Rechazar\n");
         System.out.print ("Opcion: ");
         Scanner entrada = new Scanner (System.in);
         int numero=entrada.nextInt();
             switch(numero){
-                case 1:
-                    //Aceptar
-                    for(int i =0; i<this.solicitudes_recibidas.length; i++){
-                        if(this.solicitudes_recibidas[i]!=null){
-                            this.mis_amigos[i]=u;
-                            for(int k=0; k<u.mis_amigos.length; k++){
-                                if(u.mis_amigos[k]==null){
-                                    u.solicitudes_recibidas[k]=this;
-                                    break;
-                                }   
+                case 1: this.mis_amigos.add(u);
+                        for(int i=0;i<this.solicitudes_amigos_pendientes.length;i++){
+                            if((i+1<this.solicitudes_amigos_pendientes.length)&&(this.solicitudes_amigos_pendientes[i+1]!=null)){
+                                this.solicitudes_amigos_pendientes[i]=this.solicitudes_amigos_pendientes[i+1];
                             }
-                            System.out.println("Solicitud enviada");
-                            break;
-                        }
-                    }
-                    //for(int i=0; i<this.solicitudes_recibidas.length; i++){
-                        //if(this.solicitudes_recibidas[i]!=null){
-                           // this.mis_amigos[i]=this.solicitudes_recibidas[i]; 
-                           // u.mis_amigos[0]= this;
-                            /*for(int j=0; j<u.mis_amigos.length; j++){
-                                if(u.mis_amigos[j]==null){
-                                    u.mis_amigos[j]=this;
-                                    break;
-                                }
-                                    
-                                    /*if(u.solicitudes_amigos_pendientes[j+1]!=null){
-                                        u.solicitudes_amigos_pendientes[j]= u.solicitudes_amigos_pendientes[j+1];
-                                    }else{
-                                        u.solicitudes_amigos_pendientes[j]=null;
-                                    } 
-                                }
-                                
-                            }/*
-                            this.solicitudes_recibidas[i]=this.solicitudes_recibidas[i+1];
-                            /*for(int j=0; j<u.solicitudes_amigos_pendientes.length; j++){
-                                if(u.solicitudes_amigos_pendientes==this.solicitudes_recibidas){
-                                    
-                                }
-                            }*/
-                        //}
-                    
-                    System.out.println("Solicitud aceptada\n");
-                    //aceptarInvitacion(u);
-                case 2: 
-                    rechazarInvitacion(u);
+                        }                 
+                        
+                        u.mis_amigos.add(this);
+                        break;
+                
+                case 2: rechazarInvitacion(u);
                     break;
                 
-                case 3: 
-                    System.out.println("Volviendo al menú");                        
+                default: System.out.println("Opcion no valida"); 
                     break; 
-            }  
+            }
+        
+   
+        System.out.println("Solicitud aceptada\n");
+        
     }
     
-    
     public void rechazarInvitacion(Usuario u){
-        //Rechazar
+        for(int i=0;i<this.solicitudes_amigos_pendientes.length;i++){
+            if(this.solicitudes_amigos_pendientes[i+1]!=null){
+            this.solicitudes_amigos_pendientes[i]=this.solicitudes_amigos_pendientes[i+1];
+            }
+        }
         System.out.println("Solicitud rechazada\n");
         
     }
     
     public void compartirPelicula(Pelicula p){
+        muro.append(p);
+        for(Usuario u: mis_amigos){
+            u.setMuro(muro);
+        }
          
     }
     
     public void compartirPelicula(Pelicula p, Usuario u){
-        
+        muro.append(p);
+        for(Usuario usu: mis_amigos){
+            if(usu.getNick().equals(u.getNick())){
+                usu.setMuro(muro);
+            }
+        }
     }
     
     public void compartirCritica(Critica c){
+        muro.append(c);
+        for(Usuario u: mis_amigos){
+            u.setMuro(muro);
+        }
     }
     
     
     public void compartirCritica(Critica c, Usuario u){
+        muro.append(c);
+        for(Usuario usu: mis_amigos){
+            if(usu.getNick().equals(u.getNick())){
+                usu.setMuro(muro);
+            }
+        }
     }
     
     public void compartirPArtida(Partida p){
@@ -241,6 +174,7 @@ public class Usuario implements Serializable{
     }
     
     public void compartirTodo(){
+        
         
     }
     public void compartirTodo(Usuario u){
@@ -265,7 +199,8 @@ public class Usuario implements Serializable{
         
     }
     public void setMuro(StringBuilder s){
-        
+        System.out.println("El usuario "+this.nick+" ha compartido ");
+        System.out.println(s+"\n");
     }
 
 

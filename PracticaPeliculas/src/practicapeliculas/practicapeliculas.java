@@ -78,21 +78,25 @@ public class practicapeliculas implements Serializable{
     }
     
     private static void funciones_Amigos(Usuario u){
+       
+
+        System.out.println("Mis amigos son: "+u.mis_amigos.toString()+"\n");
+
         Scanner entrada = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
-        System.out.println(" 1. Agregar amigo/Ver solicitudes enviadas\n 2. Solicitudes recibidas\n 3. Volver\n");
+        System.out.println(" 1. Agregar amigo\n 2. Solicitudes recibidas\n 3. Cerrar Sesion\n");
         System.out.print ("Opcion: ");
         int opcion= entrada.nextInt(); 
         
         switch (opcion){
             case 1: 
-                Scanner entrada2 = new Scanner (System.in);
+                /*Scanner entrada2 = new Scanner (System.in);
                 System.out.println("¿Qué deseas hacer?");
-                System.out.println(" 1. Enviar invitacion a un amigo\n 2. Ver las solicitudes y los amigos\n 3. Volver\n");
+                System.out.println(" 1. Enviar invitacion a un amigo\n 2. Ver las solicitudes\n 3. Volver\n");
                 System.out.print ("Opcion: ");
                 int opcion2= entrada2.nextInt();
                 switch (opcion2){
-                    case 1:
+                    case 1:*/
                         boolean encontrado= false;
                         Scanner entrada3 = new Scanner (System.in);
                         System.out.println("Nick de tu amigo: ");
@@ -109,31 +113,39 @@ public class practicapeliculas implements Serializable{
                                 System.out.println("No existen usuarios con ese nombre\n");
                             }
                             funciones_Amigos(u);
-                    case 2:
+                    /*case 2:
                         u.invitarAmigo(null);
                         funciones_Amigos(u);
-                    
+             1
+                            
                     case 3:
                         funciones_Amigos(u);                       
-                }
+                }*/
                   
             case 2: 
-                    System.out.println("Accediendo a tus solicitudes\n");
+                
+                    System.out.println("Tus solicitudes recibidas son:\n");
+                    for(int i=0; i<u.solicitudes_amigos_pendientes.length; i++){
+                        if(u.solicitudes_amigos_pendientes[i]!=null){
+                            System.out.println(u.solicitudes_amigos_pendientes[i].getNick());
+                        }
+                    }
                     System.out.println("¿Qué deseas hacer?\n 1:Aceptar/Rechazar\n 2:Volver\n");
-                    Scanner entrada3 = new Scanner (System.in);
+                    Scanner entrada4 = new Scanner (System.in);
                     System.out.print ("Opcion: ");
-                    int solicitud= entrada3.nextInt();
+                    int solicitud= entrada4.nextInt();
                     switch(solicitud){
                             case 1:
-                                u.aceptarInvitacion(u);
+                                u.aceptarInvitacion(u.solicitudes_amigos_pendientes[0]);
                                 break;
                             case 2: 
                                 funciones_Amigos(u);
                                 break;
                             default: System.out.println ("Opcion no reconocida");
-                                opciones_perfil(u);
+                                     funciones_Amigos(u);
+                                     break;
                     }
-            case 3: opciones_perfil(u);
+            case 3: Cerrar_Sesion(u);
                     break;
         }
     }                         
@@ -279,9 +291,6 @@ public class practicapeliculas implements Serializable{
                       break;
             
             case 2: crearUsuario ();
-                      break;
-             
-            case 0: System.out.println ("Adios");
                       break;
             default: System.out.println ("Opcion no reconocida");
         }
