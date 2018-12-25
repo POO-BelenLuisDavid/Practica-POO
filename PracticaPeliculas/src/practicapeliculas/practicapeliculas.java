@@ -16,16 +16,17 @@ import java.util.Scanner;
 public class practicapeliculas implements Serializable{
 
     public static Usuarios usuarios= new Usuarios();
-    //private static ArrayList<Usuario> usuario = new ArrayList<>(); 
     private static Usuario admin = new Usuario("Luis", "1234", 0, 0, 0);
     private static Usuario admin2 = new Usuario("Dani", "1234", 0, 0, 0);
-    
+    //private static ArrayList<Usuario> usuario = new ArrayList<>(); 
+   
     /**
      * @param args the command line arguments
      */
     
     private static void acceder (){
-       Usuario u;  
+       
+        Usuario u;  
         do{
             u = usuarios.autenticar ();
             if (u==null) {
@@ -46,16 +47,17 @@ public class practicapeliculas implements Serializable{
         Usuario nuevo = new Usuario (nick, pass, 0, 0, 0);
        
         boolean sePuede = usuarios.registrar(nuevo);
-        if (sePuede) {
+        if (sePuede){
             System.out.println ("Usuario creado correctamente");
             System.out.println ("Ahora inicia sesión");
             acceder();
-        }else {
+        }else{
             System.out.println ("No se puede crear usuario");
         }
     }
     
     private static void opciones_perfil(Usuario u){
+        
         Scanner entrada = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
         System.out.println(" 1. Mis amigos\n 2. Películas\n 3. Trivial\n 4. Muro\n 5. Cerrar sesión");
@@ -78,10 +80,8 @@ public class practicapeliculas implements Serializable{
     }
     
     private static void funciones_Amigos(Usuario u){
-       
 
-        System.out.println("Mis amigos son: "+u.mis_amigos.toString()+"\n");
-
+        System.out.println("Mis amigos son:\n "+u.mis_amigos.toString()+"\n");
         Scanner entrada = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
         System.out.println(" 1. Agregar amigo\n 2. Solicitudes recibidas\n 3. Volver\n");
@@ -89,45 +89,31 @@ public class practicapeliculas implements Serializable{
         int opcion= entrada.nextInt(); 
         
         switch (opcion){
-            case 1: 
-                /*Scanner entrada2 = new Scanner (System.in);
-                System.out.println("¿Qué deseas hacer?");
-                System.out.println(" 1. Enviar invitacion a un amigo\n 2. Ver las solicitudes\n 3. Volver\n");
-                System.out.print ("Opcion: ");
-                int opcion2= entrada2.nextInt();
-                switch (opcion2){
-                    case 1:*/
-                        boolean encontrado= false;
-                        Scanner entrada3 = new Scanner (System.in);
-                        System.out.println("Nick de tu amigo: ");
-                        String nombreAmigo= entrada3.nextLine();
-                    
-                            for(Usuario usu: usuarios.getUsuarios()){
-                                if(usu.getNick().equals(nombreAmigo)){
-                                    u.invitarAmigo(usu);
-                                    encontrado=true;
-                                    break;
-                            }
-                            }
-                            if(!encontrado){
-                                System.out.println("No existen usuarios con ese nombre\n");
-                            }
-                            funciones_Amigos(u);
-                    /*case 2:
-                        u.invitarAmigo(null);
-                        funciones_Amigos(u);
-             1
-                            
-                    case 3:
-                        funciones_Amigos(u);                       
-                }*/
-                  
-            case 2: 
-                
-                    System.out.println("Tus solicitudes recibidas son:\n");
+            case 1:      
+                    boolean encontrado= false;
+                    Scanner entrada3 = new Scanner (System.in);
+                    System.out.println("Nick de tu amigo: ");
+                    String nombreAmigo= entrada3.nextLine();
+                        
+                    for(Usuario usu: usuarios.getUsuarios()){
+                        if(usu.getNick().equals(nombreAmigo)){
+                            u.invitarAmigo(usu);
+                            encontrado=true;
+                            break;
+                        }
+                        }
+                    if(!encontrado){
+                        System.out.println("No existen usuarios con ese nombre\n");
+                    }
+                    funciones_Amigos(u);
+               
+            case 2:                
+                    System.out.println("Tus solicitudes recibidas son:\n(Recuerda que se aceptan/rechazan en orden)");
+                    int cont=0;
                     for(int i=0; i<u.solicitudes_amigos_pendientes.length; i++){
                         if(u.solicitudes_amigos_pendientes[i]!=null){
-                            System.out.println(u.solicitudes_amigos_pendientes[i].getNick());
+                            cont++;
+                            System.out.println(cont+".-"+u.solicitudes_amigos_pendientes[i].getNick());
                         }
                     }
                     System.out.println("¿Qué deseas hacer?\n 1:Aceptar/Rechazar\n 2:Volver\n");
@@ -146,7 +132,9 @@ public class practicapeliculas implements Serializable{
                                      funciones_Amigos(u);
                                      break;
                     }
-            case 3: opciones_perfil(u);
+                    
+            case 3: 
+                    opciones_perfil(u);
                     break;
         }
     }                         

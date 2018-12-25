@@ -24,12 +24,7 @@ public class Usuario implements Serializable{
    
     Usuario solicitudes_amigos_pendientes[]=new Usuario[N];//solicitudes que yo recibo   
     ArrayList<Usuario> mis_amigos=new ArrayList<Usuario>(); //solicitudes que me han aceptado y que he aceptado yo
-    //Usuario solicitudes_rechazadas[]=new Usuario[N];// solicitudes que yo envío y me rechazan
-    //Usuario solicitudes_recibidas[]=new Usuario[N];// solicitudes que me han enviado
-    
-    
-    //private static ArrayList<Usuario>solicitudes_recibidas; //solicitues que me han hecho
-    
+   
     String nick;
     String clave;
     
@@ -103,7 +98,8 @@ public class Usuario implements Serializable{
             Scanner entrada = new Scanner (System.in);
             int numero=entrada.nextInt();
                 switch(numero){
-                    case 1: this.mis_amigos.add(u);
+                    case 1: 
+                            this.mis_amigos.add(u);
                             for(int i=0;i<this.solicitudes_amigos_pendientes.length;i++){
                                 if((i+1<this.solicitudes_amigos_pendientes.length)&&(this.solicitudes_amigos_pendientes[i+1]!=null)){
                                     this.solicitudes_amigos_pendientes[i]=this.solicitudes_amigos_pendientes[i+1];
@@ -116,26 +112,28 @@ public class Usuario implements Serializable{
                             System.out.println("Solicitud aceptada\n");
                             break;
 
-                    case 2: rechazarInvitacion(u);
-                        break;
+                    case 2: 
+                            rechazarInvitacion(u);
+                            break;
 
-                    default: System.out.println("Opcion no valida"); 
-                        break; 
+                    default: 
+                            System.out.println("Opcion no valida"); 
+                            break; 
                 }           
         }     
     }
     
     public void rechazarInvitacion(Usuario u){
+        
         for(int i=0;i<this.solicitudes_amigos_pendientes.length;i++){
             if((i+1<this.solicitudes_amigos_pendientes.length)&&(this.solicitudes_amigos_pendientes[i+1]!=null)){
-            this.solicitudes_amigos_pendientes[i]=this.solicitudes_amigos_pendientes[i+1];
+                this.solicitudes_amigos_pendientes[i]=this.solicitudes_amigos_pendientes[i+1];
             }
             else{
                 this.solicitudes_amigos_pendientes[i]=null;
             }
         }
-        System.out.println("Solicitud rechazada\n");
-        
+        System.out.println("Solicitud rechazada\n");        
     }
     
     public void compartirPelicula(Pelicula p){
