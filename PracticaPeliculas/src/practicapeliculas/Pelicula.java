@@ -63,7 +63,7 @@ public class Pelicula {
     
     @Override
     public String toString(){
-        String cadena="pelicula :"+this.getTitulo()+"del año "+this.getAño();
+        String cadena="pelicula :"+this.getTitulo()+" del año "+this.getAño();
         cadena=cadena+" y director "+this.getDirector()+"\n";
         return cadena;
     }

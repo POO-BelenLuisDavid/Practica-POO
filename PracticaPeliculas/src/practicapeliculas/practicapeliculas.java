@@ -84,7 +84,7 @@ public class practicapeliculas implements Serializable{
 
         Scanner entrada = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
-        System.out.println(" 1. Agregar amigo\n 2. Solicitudes recibidas\n 3. Cerrar Sesion\n");
+        System.out.println(" 1. Agregar amigo\n 2. Solicitudes recibidas\n 3. Volver\n");
         System.out.print ("Opcion: ");
         int opcion= entrada.nextInt(); 
         
@@ -137,6 +137,7 @@ public class practicapeliculas implements Serializable{
                     switch(solicitud){
                             case 1:
                                 u.aceptarInvitacion(u.solicitudes_amigos_pendientes[0]);
+                                funciones_Amigos(u);
                                 break;
                             case 2: 
                                 funciones_Amigos(u);
@@ -145,7 +146,7 @@ public class practicapeliculas implements Serializable{
                                      funciones_Amigos(u);
                                      break;
                     }
-            case 3: Cerrar_Sesion(u);
+            case 3: opciones_perfil(u);
                     break;
         }
     }                         

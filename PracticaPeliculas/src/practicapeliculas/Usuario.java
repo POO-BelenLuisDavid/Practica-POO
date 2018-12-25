@@ -94,38 +94,44 @@ public class Usuario implements Serializable{
    
     public void aceptarInvitacion(Usuario u){
        
-        
-        System.out.println("1.Aceptar\n 2.Rechazar\n");
-        System.out.print ("Opcion: ");
-        Scanner entrada = new Scanner (System.in);
-        int numero=entrada.nextInt();
-            switch(numero){
-                case 1: this.mis_amigos.add(u);
-                        for(int i=0;i<this.solicitudes_amigos_pendientes.length;i++){
-                            if((i+1<this.solicitudes_amigos_pendientes.length)&&(this.solicitudes_amigos_pendientes[i+1]!=null)){
-                                this.solicitudes_amigos_pendientes[i]=this.solicitudes_amigos_pendientes[i+1];
-                            }
-                        }                 
-                        
-                        u.mis_amigos.add(this);
+        if(this.solicitudes_amigos_pendientes[0]==null){
+            System.out.println("No tienes solicitudes de amistad pendientes por contestar");
+        }
+        else{
+            System.out.println(" 1.Aceptar\n 2.Rechazar\n");
+            System.out.print ("Opcion: ");
+            Scanner entrada = new Scanner (System.in);
+            int numero=entrada.nextInt();
+                switch(numero){
+                    case 1: this.mis_amigos.add(u);
+                            for(int i=0;i<this.solicitudes_amigos_pendientes.length;i++){
+                                if((i+1<this.solicitudes_amigos_pendientes.length)&&(this.solicitudes_amigos_pendientes[i+1]!=null)){
+                                    this.solicitudes_amigos_pendientes[i]=this.solicitudes_amigos_pendientes[i+1];
+                                }
+                                else{
+                                    this.solicitudes_amigos_pendientes[i]=null;
+                                } 
+                            }                                         
+                            u.mis_amigos.add(this);
+                            System.out.println("Solicitud aceptada\n");
+                            break;
+
+                    case 2: rechazarInvitacion(u);
                         break;
-                
-                case 2: rechazarInvitacion(u);
-                    break;
-                
-                default: System.out.println("Opcion no valida"); 
-                    break; 
-            }
-        
-   
-        System.out.println("Solicitud aceptada\n");
-        
+
+                    default: System.out.println("Opcion no valida"); 
+                        break; 
+                }           
+        }     
     }
     
     public void rechazarInvitacion(Usuario u){
         for(int i=0;i<this.solicitudes_amigos_pendientes.length;i++){
-            if(this.solicitudes_amigos_pendientes[i+1]!=null){
+            if((i+1<this.solicitudes_amigos_pendientes.length)&&(this.solicitudes_amigos_pendientes[i+1]!=null)){
             this.solicitudes_amigos_pendientes[i]=this.solicitudes_amigos_pendientes[i+1];
+            }
+            else{
+                this.solicitudes_amigos_pendientes[i]=null;
             }
         }
         System.out.println("Solicitud rechazada\n");
