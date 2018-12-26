@@ -39,15 +39,6 @@ public class Usuario implements Serializable{
     public Usuario (){
  
     }
-    /*public ArrayList<Usuario> getSolicitudes_recibidas(){
-         return solicitudes_recibidas;
-     }*/
-    
-    /*private static ArrayList<Usuario> amigos; 
-    public Usuario(){  
-         amigos = new ArrayList<Usuario>(); 
-     }*/
-
     
     public String getNick() {
         return nick;
@@ -76,15 +67,31 @@ public class Usuario implements Serializable{
     
     public void invitarAmigo(Usuario u){
         
-        if(u!=null){
-            for(int i =0; i<this.solicitudes_amigos_pendientes.length; i++){
-                if(u.solicitudes_amigos_pendientes[i]==null){
-                    u.solicitudes_amigos_pendientes[i]=this;
-                    System.out.println("Solicitud enviada");
-                    break;
-                }
-            }          
+        int aux=0;
+        for(int i=0; i<u.solicitudes_amigos_pendientes.length; i++){
+            if(u.solicitudes_amigos_pendientes[i]==this){
+                System.out.println("Ya has enviado solicitud a este usuario\n");
+                aux++;
+            }
         }
+        for(int j=0; j<this.mis_amigos.size(); j++){
+            if(this.mis_amigos.get(j).equals(u)){
+                System.out.println("Este usuario ya es tu amigo\n");   
+                aux++;
+            }
+        }
+        
+        if(aux==0){
+            if(u!=null){
+                for(int i =0; i<this.solicitudes_amigos_pendientes.length; i++){
+                    if(u.solicitudes_amigos_pendientes[i]==null){
+                        u.solicitudes_amigos_pendientes[i]=this;
+                        System.out.println("Solicitud enviada");
+                        break;
+                    }
+                }          
+            }
+        }      
     }
    
     public void aceptarInvitacion(Usuario u){
