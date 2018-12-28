@@ -19,6 +19,7 @@ public class Usuario implements Serializable{
     int N=10;
     StringBuilder muro= new StringBuilder();
     Peliculas peliculas = new Peliculas();
+    Peliculas criticas = new Peliculas();
     int partidas_ganadas, partidas_perdidas, partidas_empatadas;
     Partida partidas_completas[], partidas_pendiente[];
    
@@ -147,8 +148,7 @@ public class Usuario implements Serializable{
         muro.append(p);
         for(Usuario u: mis_amigos){
             u.setMuro(muro);
-        }
-         
+        }   
     }
     
     public void compartirPelicula(Pelicula p, Usuario u){
@@ -194,12 +194,11 @@ public class Usuario implements Serializable{
     }
     
     public void anadirPelicula(Pelicula p){
-        peliculas.anadirPeliculas(p);
-        System.out.println("Pelicula añadida");
+        peliculas.anadirPelicula(p);
     }
     
     public void anadirCritica(Critica c, Pelicula p){
-        
+        criticas.anadirCritica(c,p);
     }
     
     

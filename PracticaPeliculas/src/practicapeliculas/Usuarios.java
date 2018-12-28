@@ -37,6 +37,7 @@ public class Usuarios {
         return null;
     }
      
+    //Evitar que se puedan crear dos usuarios con el mismo nick 
     public boolean registrar(Usuario nuevo) {
         boolean sePuede = false;
         if (!usuarios.contains(nuevo)) {

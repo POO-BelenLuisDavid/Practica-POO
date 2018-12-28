@@ -14,7 +14,9 @@ public class Critica {
     String pelicula, texto;
     double puntuacion;
     
-    
+    public Critica(){
+        
+    }
     public Critica(String p, String t, double pun){
         this.pelicula=p;
         this.texto=t;
