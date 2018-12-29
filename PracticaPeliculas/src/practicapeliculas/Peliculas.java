@@ -41,17 +41,24 @@ public class Peliculas {
     }
     
     public boolean anadirPelicula(Pelicula p){
-        boolean sePuede=false;
+        boolean sePuede=true;
         
-        
-        
-        if(peliculas.contains(p)){
+        for(Pelicula peli: peliculas){
+            if(peli.getTitulo().contains(p.getTitulo())){
+                sePuede=false;
+            }
+        }
+        if(sePuede==true){
+            this.peliculas.add(p);
+            System.out.println("Pelicula añadida correctamente");
+        }
+        /*if(peliculas.contains(p)){
             System.out.println("La película ya existe");
         }else{
             this.peliculas.add(p);
             System.out.println("Pelicula añadida correctamente");
             sePuede=true;
-        }
+        }*/
         return sePuede;
     }
     
