@@ -153,6 +153,14 @@ public class Usuario implements Serializable{
     
     public void compartirPelicula(Pelicula p, Usuario u){
         muro.append(p);
+        
+        /*for(int j=0; j<this.peliculas.size(); j++){
+            if(this.peliculas.get(j).equals(u)){
+                System.out.println("Este usuario ya es tu amigo\n");   
+                aux++;
+            }
+        }*/
+        
         for(Usuario usu: mis_amigos){
             if(usu.getNick().equals(u.getNick())){
                 usu.setMuro(muro);
@@ -209,7 +217,7 @@ public class Usuario implements Serializable{
         
     }
     public void setMuro(StringBuilder s){
-        System.out.println("El usuario "+this.nick+" ha compartido ");
+        System.out.println("Pelicula conpartida con "+this.nick);
         System.out.println(s+"\n");
     }
 

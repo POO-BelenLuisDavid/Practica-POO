@@ -65,39 +65,44 @@ public class Peliculas {
         System.out.println("Titulo de la pelicula:");
         String titulo = pelicula.nextLine();
         
+        int cont2=0;
         for(Pelicula p:peliculas){
             if(p.getTitulo().equals(titulo)){
                 System.out.println(p);
-                break;
+                cont2++;
             }
-            else{
-                System.out.println("Titulo erroneo");
-            }
+        }    
+        if(cont2==0){
+            System.out.println("Titulo erroneo");
         }
+        
     }
     
     
     public void anadirCritica(Critica c, Pelicula p){
         Critica crit=new Critica();
+        int cont=0;
         for(Pelicula peli: peliculas){
-            if(!peli.getTitulo().equals(p.getTitulo())){
-                System.out.println("No existe una peli con este titulo");
-                System.out.println("Critica no realizada");
-                break;
-            }
-            else{
-                if(criticas.contains(c)){
+            if(peli.getTitulo().equals(p.getTitulo())){
+                if(criticas.contains(c)){//Esto no funciona, puedo meter dos criticas totalmente igual en una misma peli
                     System.out.println("Ya hay critica de esta pelicula");
-                }else{
-                    criticas.add(c);
-                    System.out.println("Critica realizada!");
-                    }   
-            }
-        }              
-    }
+                    break;
+                }
+                criticas.add(c);
+                System.out.println("Critica realizada!");
+                cont++;
+            }    
+        }
+        if(cont==0){
+            System.out.println("No existe una peli con este titulo");
+            System.out.println("Critica no realizada"); 
+            } 
+    }              
+ 
     
     public void criticasPelis(){
         int cont=0;
+        int cont2=0;
         for(Pelicula p: peliculas){
             cont++;
             System.out.println(cont+".-"+p.getTitulo());
@@ -108,12 +113,19 @@ public class Peliculas {
         String titulo = pelicula.nextLine();
         
         for(Critica c: criticas){
-            if(c.getPelicula().equals(titulo)){
-                System.out.println(c);
-            }
-            else{
-                System.out.println("Esta peli aun no tiene critica");
-            }
+            if(!criticas.isEmpty()){
+                if(c.getPelicula().equals(titulo)){
+                    System.out.println(c);
+                    cont2++;
+                }
+                else{
+                    System.out.println("Esta peli no existe o aun no tiene critica");
+                    cont2++;
+                }   
+            }        
+        }
+        if(cont2==0){//Este else no funciona
+            System.out.println("Aun no hay criticas registradas");
         }
     }
     

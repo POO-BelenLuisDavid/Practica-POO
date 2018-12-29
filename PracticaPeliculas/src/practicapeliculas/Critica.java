@@ -44,7 +44,7 @@ public class Critica {
     
     @Override
     public String toString(){
-        String cadena="critica de la película "+this.getPelicula()+": "+this.getTexto();
+        String cadena="Critica de la película "+this.getPelicula()+": "+this.getTexto();
         cadena=cadena+". Puntuación: "+this.getPunt()+"\n";
         return cadena;
     }

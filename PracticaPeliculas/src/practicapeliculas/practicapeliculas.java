@@ -178,15 +178,17 @@ public class practicapeliculas implements Serializable{
             case 2: 
                     Scanner entrada6 = new Scanner (System.in);
                     System.out.println("¿De qué modo desea compartir?");
-                    System.out.println("1. Compartir pelicula\n 2. Compartir todo\n");
+                    System.out.println("1. Compartir pelicula\n2. Compartir todo\n");
                     int opcion_compartir=entrada6.nextInt();
                     switch(opcion_compartir){
                         case 1:  
                                 //No deberíamos compartir una pelicula sobre las peliculas que tenemos ya creadas?
+                                System.out.println("Este es el listado de titulos actualmente disponibles");
+                                u.peliculas.listaPelis();  
+                                System.out.print ("¿Qué película deseas compartir? ");
                                 Scanner entrada7 = new Scanner (System.in);
-                                System.out.print ("Dime el titulo: ");
                                 String t = entrada7.nextLine();
-                                System.out.print ("Dime el nombre del director: ");
+                                /*System.out.print ("Dime el nombre del director: ");
                                 String d = entrada7.nextLine();
                                 System.out.print ("Dime el genero: ");
                                 String g = entrada7.nextLine();
@@ -196,9 +198,10 @@ public class practicapeliculas implements Serializable{
                                 String az = entrada7.nextLine();
                                 System.out.print ("Dime el año: ");
                                 int añ = entrada7.nextInt();
-                                Pelicula pe= new Pelicula(t,d,g,a,az,añ);
+                                Pelicula pe= new Pelicula(t,d,g,a,az,añ);*/
+                                Pelicula pe=new Pelicula(t,null,null,null,null,0);
                                 
-                               modo_comparticion(u,pe);
+                                modo_comparticion(u,pe);
                                   
                         case 2: //aqui tambien hay que meter una critica.(por hacer)
                             
@@ -253,7 +256,7 @@ public class practicapeliculas implements Serializable{
         
         System.out.println("--------------------------------");
         Scanner entrada8= new Scanner(System.in);
-        System.out.println("Desea compartir la película con: 1. Todos\n 2. Un amigo\n");
+        System.out.println("Desea compartir la película con:\n1. Todos\n2. Un amigo\nOpción:");
         int seleccion= entrada8.nextInt();
         switch(seleccion){
             case 1: System.out.println("Compartiendo pelicula");
@@ -265,11 +268,15 @@ public class practicapeliculas implements Serializable{
                     String nombreA= entrada2.nextLine();
 
                     for(Usuario usu: usuarios.getUsuarios()){
-                        if(usu.getNick().equals(nombreA));
+                        if(usu.getNick().equals(nombreA)){
                             System.out.print("Compartiendo pelicula\n");
                             u.compartirPelicula(p, usu);
                             encontrado=true;
                             break;
+                        }
+                        else{
+                            System.out.println("Usuario no encontrado");
+                        }
                     }
                     if(!encontrado){
                         System.out.println("No tienes amigos con ese nick\n");
