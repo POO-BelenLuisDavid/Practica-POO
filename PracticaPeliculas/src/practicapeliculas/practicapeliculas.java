@@ -53,7 +53,8 @@ public class practicapeliculas implements Serializable{
             System.out.println ("Ahora inicia sesión");
             acceder();
         }else{
-            System.out.println ("No se puede crear usuario");
+            System.out.println ("No se puede crear usuario, es posible que el nick ya esté cogido");
+            Inicio_Sesion();
         }
     }
     

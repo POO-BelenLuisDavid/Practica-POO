@@ -43,6 +43,8 @@ public class Peliculas {
     public boolean anadirPelicula(Pelicula p){
         boolean sePuede=false;
         
+        
+        
         if(peliculas.contains(p)){
             System.out.println("La película ya existe");
         }else{
