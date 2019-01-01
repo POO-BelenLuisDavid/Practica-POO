@@ -14,9 +14,11 @@ import java.util.Scanner;
  */
 public class Peliculas {
     
-    private static ArrayList<Pelicula> peliculas;
+    private  ArrayList<Pelicula> peliculas;  
+    private  ArrayList<Critica> criticas;
     
-    private static ArrayList<Critica> criticas;
+    //Usuario usuarios =new Usuario();
+    
     
     public Peliculas(){  
          peliculas = new ArrayList<Pelicula>(); 
@@ -40,51 +42,51 @@ public class Peliculas {
         }
     }
     
-    public boolean anadirPelicula(Pelicula p){
+    public boolean anadirPelicula(Pelicula p, Usuario u){ //Añadir usuario
         boolean sePuede=true;
-        
-        for(Pelicula peli: peliculas){
+        for(Pelicula peli: u.peliculas.getPeliculas()){
             if(peli.getTitulo().contains(p.getTitulo())){
                 sePuede=false;
             }
         }
         if(sePuede==true){
-            this.peliculas.add(p);
+            u.peliculas.getPeliculas().add(p);
             System.out.println("Pelicula añadida correctamente");
         }
-        /*if(peliculas.contains(p)){
-            System.out.println("La película ya existe");
-        }else{
-            this.peliculas.add(p);
-            System.out.println("Pelicula añadida correctamente");
-            sePuede=true;
-        }*/
         return sePuede;
     }
     
-    public void verInfoPeliculas(){
+    public void verInfoPeliculas(Usuario u){
         int cont=0;
-        System.out.println("Tu lista de peliculas:");
-        for(Pelicula p: peliculas){
-            cont++;
-            System.out.println(cont+".-"+p.getTitulo());
+        boolean sePuede=true;
+        if(u.peliculas.getPeliculas().isEmpty()){
+            System.out.println("No tienes peliculas");
+            System.out.println("Volviendo al menu");
+            sePuede=false;
         }
-        System.out.println("¿De que peli quieres ver información?");   
-        Scanner pelicula = new Scanner(System.in);
-        System.out.println("Titulo de la pelicula:");
-        String titulo = pelicula.nextLine();
         
-        int cont2=0;
-        for(Pelicula p:peliculas){
-            if(p.getTitulo().equals(titulo)){
-                System.out.println(p);
-                cont2++;
+        if(sePuede==true){
+            System.out.println("Tu lista de peliculas:");
+            for(Pelicula p: u.peliculas.getPeliculas()){
+                cont++;
+                System.out.println(cont+".-"+p.getTitulo());
             }
-        }    
-        if(cont2==0){
-            System.out.println("Titulo erroneo");
+            System.out.println("¿De que peli quieres ver información?");   
+            Scanner pelicula = new Scanner(System.in);
+            System.out.println("Titulo de la pelicula:");
+            String titulo = pelicula.nextLine();
+
+            int cont2=0;
+            for(Pelicula p:u.peliculas.getPeliculas()){
+                if(p.getTitulo().equals(titulo)){
+                    System.out.println(p);
+                    cont2++;
+                }
+            }    
+            if(cont2==0){
+                System.out.println("Titulo erroneo");
+            }      
         }
-        
     }
     
     
