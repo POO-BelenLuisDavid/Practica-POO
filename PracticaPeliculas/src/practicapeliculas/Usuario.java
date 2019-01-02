@@ -24,6 +24,7 @@ public class Usuario implements Serializable{
    
     Usuario solicitudes_amigos_pendientes[]=new Usuario[N];//solicitudes que yo recibo   
     ArrayList<Usuario> mis_amigos=new ArrayList<Usuario>(); //solicitudes que me han aceptado y que he aceptado yo
+    ArrayList<Critica> criticas_compartidas=new ArrayList<Critica>();
     //ArrayList<Pelicula> mis_peliculas =new ArrayList<Pelicula>();
     String nick;
     String clave;
@@ -177,8 +178,8 @@ public class Usuario implements Serializable{
         }
         if(sePuede==true){
             for(Pelicula peli: peliculasaux ){
-                if((p.getTitulo().equals(peli.getTitulo()))){  //podria añadir una restricción para que, en caso de que el amigo 
-                    sePuede2=true;          //ya tenga la peli entre sus pelis, salte un mensaje de error.
+                if(p.getTitulo().equals(peli.getTitulo())){  //podria añadir una restricción para que, en caso de que el amigo 
+                    sePuede2=true;                             //ya tenga la peli entre sus pelis, salte un mensaje de error.
                     cont++;
                     peli2=peli;
                     break;
@@ -196,19 +197,55 @@ public class Usuario implements Serializable{
     
     public void compartirCritica(Critica c){
         muro.append(c);
-        for(Usuario u: mis_amigos){
-            u.setMuro(muro);
+        ArrayList<Critica> criticasaux=this.peliculas.getCriticas();
+        int cont=0;
+        
+        for(Critica crit: criticasaux){
+            if(c.getPelicula().equals(crit.pelicula)){
+                for(Usuario u: mis_amigos){
+                    u.setMuro(muro);
+                    peliculas.anadirCriticaCompartida(crit, u);
+                    cont++;
+                }
+            }
+        }
+        if(cont==0){
+            System.out.println("Nombre de la peli incorrecto");
         }
     }
     
-    
     public void compartirCritica(Critica c, Usuario u){
         muro.append(c);
+        int cont=0;
+        boolean sePuede=false;  
+        boolean sePuede2=false;
+        ArrayList<Critica> criticasaux= peliculas.getCriticas();
+        Critica crit2= new Critica();
+        
         for(Usuario usu: mis_amigos){
             if(usu.getNick().equals(u.getNick())){
-                usu.setMuro(muro);
+                sePuede=true;
             }
         }
+        if(sePuede==false){
+            System.out.println("Nombre de amigo incorrecto");
+        }
+        if(sePuede==true){
+            for(Critica crit: criticasaux){
+                if(crit.getPelicula().equals(c.getPelicula())){
+                    sePuede2=true;
+                    cont++;
+                    crit2=crit;
+                }
+            }
+        }
+        if(sePuede2==true){
+            //u.setMuro(muro);
+            peliculas.anadirCriticaCompartida(crit2, u);
+        }
+        if(cont==0){
+                System.out.println("Nombre de la crítica incorrecto");
+            }
     }
     
     public void compartirPArtida(Partida p){

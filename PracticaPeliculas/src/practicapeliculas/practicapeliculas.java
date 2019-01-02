@@ -106,7 +106,7 @@ public class practicapeliculas implements Serializable{
                     if(!encontrado){
                         System.out.println("No existen usuarios con ese nombre\n");
                     }
-                    funciones_Amigos(u);
+                    opciones_perfil(u);
                     break;
                
             case 2:                
@@ -125,7 +125,7 @@ public class practicapeliculas implements Serializable{
                     switch(solicitud){
                             case 1:
                                 u.aceptarInvitacion(u.solicitudes_amigos_pendientes[0]);
-                                funciones_Amigos(u);
+                                opciones_perfil(u);
                                 break;
                             case 2: 
                                 funciones_Amigos(u);
@@ -148,7 +148,7 @@ public class practicapeliculas implements Serializable{
         Pelicula p;
         Scanner entrada4 = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
-        System.out.println(" 1.Agregar película\n 2.Compartir película\n 3.Listado de películas\n 4.Críticas de películas\n 5.Volver");
+        System.out.println(" 1.Agregar película\n 2.Compartir película\n 3.Listado de películas\n 4.Críticas\n 5.Volver");
         System.out.print ("Opcion: ");
         int opcion= entrada4.nextInt(); 
         
@@ -191,7 +191,7 @@ public class practicapeliculas implements Serializable{
                                 String t = entrada7.nextLine();
                                 Pelicula pe=new Pelicula(t,null,null,null,null,0);
                                 
-                                modo_comparticion(u,pe);
+                                modo_comparticion_pelicula(u,pe);
                                 break;
                                   
                         case 2: //aqui tambien hay que meter una critica.(por hacer)
@@ -209,17 +209,15 @@ public class practicapeliculas implements Serializable{
                     break;
             
             case 4:
-                    System.out.println("¿Que deseas hacer?\n 1:Ver críticas 2:Hacer una crítica");
+                    
+                    System.out.println("¿Que deseas hacer?\n 1:Hacer una crítica 2:Compartir una crítica");
                     System.out.print("Opcion:");
                     Scanner entrada7= new Scanner(System.in);
                     int opcion_critica= entrada7.nextInt();
                     Pelicula peli= new Pelicula();
                     switch(opcion_critica){
+                        
                         case 1:
-                                System.out.println("Este es el listado de titulos actualmente disponibles");
-                                u.peliculas.criticasPelis();   
-                                break;
-                        case 2:
                                 u.peliculas.listaPelis();
                                 Scanner entrada8 = new Scanner (System.in);
                                 System.out.print ("Dime el titulo de la pelicula: ");
@@ -236,7 +234,19 @@ public class practicapeliculas implements Serializable{
                                 Critica c= new Critica(tit, com, nota);
                                 Pelicula p2=new Pelicula(tit, null, null, null, null,0);
                                 u.anadirCritica(c,p2);
+                                break;
+                                
+                        case 2:
+                                System.out.println("Este es tu listado de críticas actualmente disponibles");
+                                u.peliculas.listaCriticas();                     
+                                System.out.print ("Dime el titulo de la pelicula: ");
+                                Scanner entrada = new Scanner (System.in);
+                                String titulo1 = entrada.nextLine();
+                                Critica c2= new Critica(titulo1, null, 0);
+                                modo_comparticion_critica(c2, u);   
+                                break;
                     }
+                    
             case 5: 
                     opciones_perfil(u);
                     break;
@@ -248,7 +258,7 @@ public class practicapeliculas implements Serializable{
     }
     
 
-    public static void modo_comparticion(Usuario u,Pelicula p){
+    public static void modo_comparticion_pelicula(Usuario u,Pelicula p){
         int cont=0;
         System.out.println("--------------------------------");
         Scanner entrada8= new Scanner(System.in);
@@ -261,7 +271,7 @@ public class practicapeliculas implements Serializable{
                     funciones_Peliculas(u);
                     break;
             case 2: 
-                    //Poner aqui lista de amigos
+                    System.out.println("Mis amigos son:\n "+u.mis_amigos.toString()+"\n");
                     Scanner entrada2 = new Scanner (System.in);
                     System.out.println("Nick de tu amigo: ");
                     String nombreA= entrada2.nextLine();
@@ -281,9 +291,48 @@ public class practicapeliculas implements Serializable{
                     break;
             default: 
                     System.out.println("Por favor, seleccione una opción correcta");
-                    modo_comparticion(u,p);
+                    modo_comparticion_pelicula(u,p);
                     break;
         }
+    }
+    
+    public static void modo_comparticion_critica(Critica c, Usuario u){
+        int cont=0;
+        System.out.println("--------------------------------");
+        Scanner entrada8= new Scanner(System.in);
+        System.out.print("Desea compartir la critica con:\n1. Todos\n2. Un amigo\nOpción:");
+        int seleccion= entrada8.nextInt();
+        switch(seleccion){
+            case 1: 
+                    System.out.println("Compartiendo critica");
+                    u.compartirCritica(c);
+                    funciones_Peliculas(u);
+                    break;
+            case 2: 
+                    System.out.println("Mis amigos son:\n "+u.mis_amigos.toString()+"\n");
+                    Scanner entrada2 = new Scanner (System.in);
+                    System.out.println("Nick de tu amigo: ");
+                    String nombreA= entrada2.nextLine();
+
+                    for(Usuario usu: usuarios.getUsuarios()){
+                        if(usu.getNick().equals(nombreA)){
+                            System.out.print("Compartiendo crítica\n");
+                            u.compartirCritica(c, usu);
+                            cont++;
+                            break;
+                        }
+                    }
+                    if(cont==0){
+                        System.out.println("No tienes amigos con ese nick");
+                    }
+                    funciones_Peliculas(u);
+                    break;
+            default: 
+                    System.out.println("Por favor, seleccione una opción correcta");
+                    modo_comparticion_critica(c, u);
+                    break;
+        }
+        
     }
 
 
@@ -292,7 +341,35 @@ public class practicapeliculas implements Serializable{
     }
     
     private static void funciones_Muro(Usuario u){
-        System.out.println("Chupamela luis");
+        System.out.println("Muro:\nAquí podrás ver tu actividad en la apliación.");
+        Scanner entrada = new Scanner (System.in);
+        System.out.println(" 1. Mis críticas\n 2. Películas compartidas conmigo\n 3. Criticas compartidas conmigo\n 4. Trivial\n 5. Volver");
+        System.out.print ("Opcion: ");
+        int opcion= entrada.nextInt(); 
+        
+        switch (opcion){
+            case 1:     
+                    System.out.println("Este es el listado de titulos actualmente disponibles");
+                    u.peliculas.criticasPelis();
+                    funciones_Muro(u);
+                    break;
+                    
+            case 2: 
+                    System.out.println(("Estas son las peliculas que tus amigos han compartido contigo"));
+                    break;
+            case 3: 
+                    System.out.println("Estas son las críticas de las peliculas que tus amigos han compartido contigo");
+                    peliculas.listaCriticasCompartidas(u);
+                    System.out.println("Volviendo al muro");
+                    funciones_Muro(u);
+                    break;
+            case 4: 
+                    System.out.println(("Aquí podrás ver todo lo relacionado a tus partidas de trivial y a las de tus amigos"));
+                    break;                   
+            case 5:
+                    opciones_perfil(u);
+            default: System.out.println ("Opcion no reconocida");
+        } 
     }
     
     

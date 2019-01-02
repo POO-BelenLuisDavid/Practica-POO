@@ -16,13 +16,14 @@ public class Peliculas {
     
     private  ArrayList<Pelicula> peliculas;  
     private  ArrayList<Critica> criticas;
-    
+    private  ArrayList<Critica> criticas_compartidas;
     //Usuario usuarios =new Usuario();
     
     
     public Peliculas(){  
          peliculas = new ArrayList<Pelicula>(); 
          criticas = new ArrayList<Critica>();
+         criticas_compartidas = new ArrayList<Critica>();
      }
     
     public ArrayList<Pelicula> getPeliculas(){
@@ -32,8 +33,27 @@ public class Peliculas {
    public ArrayList<Critica> getCriticas(){
         return criticas;
     }
+   
+   public ArrayList<Critica> getCriticasCompartidas(){
+       return criticas_compartidas;
+   }
     
-    public void listaPelis(){
+    public boolean anadirPelicula(Pelicula p, Usuario u){ //Comprueba si hay alguna peli con el mismo titulo y la añade si no existe
+         boolean sePuede=true;
+         for(Pelicula peli: u.peliculas.getPeliculas()){
+             if(peli.getTitulo().contains(p.getTitulo())){
+                 sePuede=false;
+             }
+         }
+         if(sePuede==true){
+             u.peliculas.getPeliculas().add(p);
+             System.out.println("Pelicula añadida correctamente");
+         }
+         return sePuede;
+    }
+
+   
+    public void listaPelis(){ //Listado de pelis
         int cont=0;
         System.out.println("Tu lista de peliculas:");
         for(Pelicula p: peliculas){
@@ -42,21 +62,7 @@ public class Peliculas {
         }
     }
     
-    public boolean anadirPelicula(Pelicula p, Usuario u){ //Añadir usuario
-        boolean sePuede=true;
-        for(Pelicula peli: u.peliculas.getPeliculas()){
-            if(peli.getTitulo().contains(p.getTitulo())){
-                sePuede=false;
-            }
-        }
-        if(sePuede==true){
-            u.peliculas.getPeliculas().add(p);
-            System.out.println("Pelicula añadida correctamente");
-        }
-        return sePuede;
-    }
-    
-    public void verInfoPeliculas(Usuario u){
+    public void verInfoPeliculas(Usuario u){ //Muestra la información de cada pelicula
         int cont=0;
         boolean sePuede=true;
         if(u.peliculas.getPeliculas().isEmpty()){
@@ -89,9 +95,7 @@ public class Peliculas {
         }
     }
     
-    
-    public void anadirCritica(Critica c, Pelicula p){
-        Critica crit=new Critica();
+    public void anadirCritica(Critica c, Pelicula p){ //Añade una critica de una peli si esta existe
         int cont=0;
         for(Pelicula peli: peliculas){
             if(peli.getTitulo().equals(p.getTitulo())){
@@ -108,10 +112,18 @@ public class Peliculas {
             System.out.println("No existe una peli con este titulo");
             System.out.println("Critica no realizada"); 
             } 
-    }              
- 
+    } 
     
-    public void criticasPelis(){
+    public void listaCriticas(){ //Muestra una lista de los titulos de las criticas disponibles (para compartirlas)
+        int cont=0;
+        System.out.println("Tu lista de peliculas con criticas:");
+        for(Critica c: criticas){
+            cont++;
+            System.out.println(cont+".-"+c.getPelicula());
+        }
+    }
+    
+    public void criticasPelis(){ //Muestra la información de una crítica
         int cont=0;
         int cont2=0;
         for(Pelicula p: peliculas){
@@ -140,4 +152,40 @@ public class Peliculas {
         }
     }
     
+    public void anadirCriticaCompartida(Critica c, Usuario u){
+        //Esto no funciona
+        u.criticas_compartidas.add(c);
+        System.out.println(c);
+        System.out.println("Crítica enviada");
+        
+    }
+    
+    public void listaCriticasCompartidas(Usuario u){
+        int cont=0;
+        int cont2=0;
+        System.out.println("Tu lista de criticas compartidas:");
+        for(Critica c:u.criticas_compartidas){
+            cont++;
+            System.out.println(cont+".-"+c.getPelicula());
+        }
+        if(cont==0){
+            System.out.println("Aun no han compartido críticas contigo");
+        }
+
+        System.out.println("¿De que peli quieres ver la crítica?"); 
+        Scanner pelicula = new Scanner(System.in);
+        System.out.println("Titulo de la pelicula:");
+        String titulo = pelicula.nextLine();
+        
+        for(Critica c: u.criticas_compartidas){
+            if(c.getPelicula().equals(titulo)){
+                System.out.println(c);
+                cont2++;
+            } 
+        }
+        if(cont2==0){
+                System.out.println("Error al introducir el nombre de la pelicula");
+            }  
+    }
 }
+    
