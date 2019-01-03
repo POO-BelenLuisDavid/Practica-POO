@@ -13,12 +13,28 @@ import java.io.File;
  */
 public class Clasificacion {
     
-    public void actualizar(){
-        
+    private int N=20, orden=0;
+    private String[] clasi_nom;
+    private int[] clasi_puntos;
+    private String[] copia;
+    
+    public Clasificacion(){
+        clasi_nom = new String[N];
+        clasi_puntos = new int[N];
+        copia = new String[N];
     }
     
-    public void visualizar(){
-        
+    public String[] getClasificacion(){
+         return clasi_nom;
+    }
+    
+    public void actualizar(){
+    }
+    
+    public void visualizar(String[] imprimir){
+         for(int i=0; i<clasi_nom.length; i++){
+            System.out.println(i+1+". "+imprimir[i]);
+        }
     }
     
     public void ordenarVictorias(){
@@ -29,7 +45,18 @@ public class Clasificacion {
         
     }
     
-    public void ordenarPuntos(){
+    public void ordenarPuntos(Usuario u, int puntos){
+        clasi_nom[orden]=u.getNick();
+        clasi_puntos[orden]=puntos;
+        
+        for(int i=0; i<clasi_nom.length; i++){
+            copia[i]=clasi_nom[i];
+        }
+        System.out.println("TODO OK");
+        
+        visualizar(copia);
+        
+        orden++;
         
     }
     

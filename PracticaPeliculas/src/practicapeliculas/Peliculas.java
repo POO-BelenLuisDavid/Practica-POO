@@ -152,7 +152,7 @@ public class Peliculas {
         }
     }
     
-    public void anadirCriticaCompartida(Critica c, Usuario u){
+    public void anadirCriticaCompartida(Critica c, Usuario u){ //Añade una critica que un usuario comparte con otro
         //Esto no funciona
         u.criticas_compartidas.add(c);
         System.out.println(c);
@@ -160,7 +160,7 @@ public class Peliculas {
         
     }
     
-    public void listaCriticasCompartidas(Usuario u){
+    public void listaCriticasCompartidas(Usuario u){ //Lista de criticas que un usuario comparte con otro
         int cont=0;
         int cont2=0;
         System.out.println("Tu lista de criticas compartidas:");

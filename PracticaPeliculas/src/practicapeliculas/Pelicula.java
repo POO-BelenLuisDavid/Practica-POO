@@ -14,20 +14,33 @@ import java.util.ArrayList;
  */
 public class Pelicula implements Serializable{
     
-    String titulo, director, genero, actor, actriz;
-    int año;
+    String titulo, director, genero, actor, actriz, año;
+    
+    int N=10, aux=-1;
+    String titulos[] = new String[N];
+    String directores[] = new String[N];
+    String generos[] = new String[N];
+    String actores[] = new String[N];
+    String actrices[] = new String[N];
+    String años[] = new String[N];
     
     public Pelicula(){  
          
      }
     
-    public Pelicula(String t, String d, String g, String a_m, String a_f, int a){
+    public Pelicula(String t, String d, String g, String a_m, String a_f, String a){
             this.titulo=t;
             this.director=d;
             this.genero=g;
             this.actor= a_m;
             this.actriz=a_f;
             this.año= a;
+            /*titulos[aux]=titulo;
+            directores[aux]=d;
+            generos[aux]=g;
+            actores[aux]=a_m;
+            actrices[aux]=a_f;
+            años[aux]=a;*/
     }
      
     public String getTitulo(){
@@ -45,7 +58,7 @@ public class Pelicula implements Serializable{
     public String getActriz(){
         return this.actriz;
     }
-    public int getAño(){
+    public String getAño(){
         return this.año;
     }
     public void setTitulo(String titulo){
@@ -63,7 +76,7 @@ public class Pelicula implements Serializable{
     public void setDirector(String d){
         this.director=d;
     }
-    public void setAño(int n){
+    public void setAño(String n){
         this.año=n;
     }
     
@@ -78,4 +91,27 @@ public class Pelicula implements Serializable{
         return (this.getTitulo().equals(p.getTitulo())&&(this.getDirector().equals(p.getDirector()))) ;
     }
     
+    public String dameTitulo(int pos){
+        return titulos[aux];
+    }
+    
+    public String dameAño(int pos){
+        return años[pos];
+    }
+    
+    public String dameGenero(int pos){
+        return generos[pos];
+    }
+    
+    public String dameDirector(int pos){
+        return directores[pos];
+    }
+    
+    public String dameActor(int pos){
+        return actores[pos];
+    }
+    
+    public String dameActriz(int pos){
+        return actrices[pos];
+    }
 }

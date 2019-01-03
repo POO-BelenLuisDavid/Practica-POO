@@ -278,6 +278,25 @@ public class Usuario implements Serializable{
     
     public void iniciarPartida(Usuario u){
         
+        Partida pa = new Partida();    
+        ArrayList<Pelicula> pe = u.peliculas.getPeliculas();
+        
+        System.out.println("Partida iniciada por "+u.getNick());
+        System.out.println();
+
+        int pos1 = pa.posAleatoria(pe);
+        pa.pregunta(u,pe,pe.get(pos1).getTitulo(), pe.get(pos1).getDirector(), pe.get(pos1).getGenero(), pe.get(pos1).getActor(), pe.get(pos1).getActriz(), pe.get(pos1).getAño());
+        int pos2 = pa.posAleatoria(pe);
+        pa.pregunta(u,pe,pe.get(pos2).getTitulo(), pe.get(pos2).getDirector(), pe.get(pos2).getGenero(), pe.get(pos2).getActor(), pe.get(pos2).getActriz(), pe.get(pos2).getAño());
+        int pos3 = pa.posAleatoria(pe);
+        pa.pregunta(u,pe,pe.get(pos3).getTitulo(), pe.get(pos3).getDirector(), pe.get(pos3).getGenero(), pe.get(pos3).getActor(), pe.get(pos3).getActriz(), pe.get(pos3).getAño());
+        int pos4 = pa.posAleatoria(pe);
+        pa.pregunta(u,pe,pe.get(pos4).getTitulo(), pe.get(pos4).getDirector(), pe.get(pos4).getGenero(), pe.get(pos4).getActor(), pe.get(pos4).getActriz(), pe.get(pos4).getAño());
+        int pos5 = pa.posAleatoria(pe);
+        pa.pregunta(u,pe,pe.get(pos5).getTitulo(), pe.get(pos5).getDirector(), pe.get(pos5).getGenero(), pe.get(pos5).getActor(), pe.get(pos5).getActriz(), pe.get(pos5).getAño());
+        int pos6 = pa.posAleatoria(pe);
+        pa.pregunta(u,pe,pe.get(pos6).getTitulo(), pe.get(pos6).getDirector(), pe.get(pos6).getGenero(), pe.get(pos6).getActor(), pe.get(pos6).getActriz(), pe.get(pos6).getAño());
+        
     }
     public void completarPartida(Partida p){
         

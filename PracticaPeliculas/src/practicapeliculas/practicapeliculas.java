@@ -166,7 +166,7 @@ public class practicapeliculas implements Serializable{
                     System.out.print ("Dime el actriz principal: ");
                     String actriz = entrada5.nextLine();
                     System.out.print ("Dime el año: ");
-                    int año = entrada5.nextInt();
+                    String año = entrada5.nextLine();
                     Pelicula pelicula= new Pelicula(titulo,director,genero,actor,actriz,año);
                    
                     boolean sePuede = peliculas.anadirPelicula(pelicula, u);
@@ -189,7 +189,7 @@ public class practicapeliculas implements Serializable{
                                 System.out.print ("¿Qué película deseas compartir? ");
                                 Scanner entrada7 = new Scanner (System.in);
                                 String t = entrada7.nextLine();
-                                Pelicula pe=new Pelicula(t,null,null,null,null,0);
+                                Pelicula pe=new Pelicula(t,null,null,null,null,null);
                                 
                                 modo_comparticion_pelicula(u,pe);
                                 break;
@@ -232,7 +232,7 @@ public class practicapeliculas implements Serializable{
                                     
                                 }
                                 Critica c= new Critica(tit, com, nota);
-                                Pelicula p2=new Pelicula(tit, null, null, null, null,0);
+                                Pelicula p2=new Pelicula(tit, null, null, null, null,null);
                                 u.anadirCritica(c,p2);
                                 break;
                                 
@@ -337,7 +337,52 @@ public class practicapeliculas implements Serializable{
 
 
     private static void funciones_Trivial(Usuario u){
-        System.out.println("Chupamela luis");
+        Partida pa = new Partida();
+        ArrayList<Pelicula> copia = u.peliculas.getPeliculas();
+        
+        Scanner entrada = new Scanner (System.in);
+        System.out.println();
+        System.out.println("|/|/|/|/|/|/|/|/|/|/|/|/|/|/|");
+        System.out.println("|/|        TRIVIAL        |/|");
+        System.out.println("|/|-----------------------|/|");
+        System.out.println("|/| 1. Iniciar Partida    |/|\n|/| 2. Completar Partida  |/|\n"
+                + "|/| 3. Compartir Partida  |/|\n|/| 4. Volver             |/|");
+        System.out.println("|/|/|/|/|/|/|/|/|/|/|/|/|/|/|");
+        System.out.print ("Opcion: ");
+        int opcion= entrada.nextInt();
+        System.out.println();
+        
+        
+        switch (opcion){
+            case 1: 
+                int aux=0;
+                for(Pelicula peli: copia){
+                    aux++;
+                }
+            if(copia.isEmpty()){
+                System.out.println("No hay suficientes películas para jugar");
+                opciones_perfil(u);
+                break;
+            }
+            else if(aux<5){
+                System.out.println("No hay suficientes películas para jugar");
+                opciones_perfil(u);
+                break;
+            }
+            else{
+                u.iniciarPartida(u);
+                opciones_perfil(u);
+                break;
+            }
+            case 2: u.completarPartida(pa);
+                    break;
+            case 3: u.compartirPArtida(pa);//Mirar Esto
+                    break;
+            case 4: System.out.println();
+                    
+                    opciones_perfil(u);
+            default: System.out.println ("Introduzca una opción correcta");
+        } 
     }
     
     private static void funciones_Muro(Usuario u){
@@ -406,6 +451,9 @@ public class practicapeliculas implements Serializable{
             
             case 2: crearUsuario ();
                       break;
+            
+            case 3: System.exit(0); //Implementar método salir para meter en él la opción de guardar todo en un fihero para luego poder cargarlo todo
+            
             default: System.out.println ("Opcion no reconocida");
         }
     }
@@ -414,7 +462,7 @@ public class practicapeliculas implements Serializable{
      public static void Inicio_Sesion(){
         int opcion;
         System.out.println ("¿Qué deseas hacer?");
-        System.out.println ("1- Acceder // 2- Registrarse");
+        System.out.println ("1- Acceder // 2- Registrarse // 3- Salir");
         
         Scanner entrada = new Scanner (System.in);
         System.out.print ("Dime una opcion: ");

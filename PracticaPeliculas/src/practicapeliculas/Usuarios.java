@@ -39,11 +39,25 @@ public class Usuarios {
      
     //Evitar que se puedan crear dos usuarios con el mismo nick 
     public boolean registrar(Usuario nuevo) {
-        boolean sePuede = false;
+        
+        boolean sePuede=true;
+        for(Usuario u: usuarios){
+            if(u.getNick().contains(nuevo.getNick())){
+                sePuede=false;
+            }
+        }
+        if(sePuede==true){
+            this.usuarios.add(nuevo);
+        }
+        return sePuede;
+        
+        
+       /* boolean sePuede = false;
         if (!usuarios.contains(nuevo)) {
             this.usuarios.add(nuevo);
             sePuede = true;
         }
-        return sePuede;
+        return sePuede;*/
     }
+   
 }
