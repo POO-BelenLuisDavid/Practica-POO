@@ -171,6 +171,7 @@ public class practicapeliculas implements Serializable{
                    
                     boolean sePuede = peliculas.anadirPelicula(pelicula, u);
                     if (sePuede){
+                        peliculas.anadirPeliculaPropia(pelicula, u);
                         opciones_perfil(u);
                     }else{
                         System.out.println ("Por favor, añade una peli nueva. La peli que has añadido ya existe");
@@ -194,7 +195,7 @@ public class practicapeliculas implements Serializable{
                                 modo_comparticion_pelicula(u,pe);
                                 break;
                                   
-                        case 2: //aqui tambien hay que meter una critica.(por hacer)
+                        case 2://(por hacer)no se como enfocarlo
                             
                         default:System.out.println("Por favor, seleccione una opción correcta");
                                 funciones_Peliculas(u);
@@ -204,6 +205,7 @@ public class practicapeliculas implements Serializable{
                     
                     break;
             case 3: 
+                    System.out.println("Aquí se muestran todas tus pelis, tanto las que has creado como las que te han compartido");
                     peliculas.verInfoPeliculas(u);
                     funciones_Peliculas(u);
                     break;
@@ -388,7 +390,7 @@ public class practicapeliculas implements Serializable{
     private static void funciones_Muro(Usuario u){
         System.out.println("Muro:\nAquí podrás ver tu actividad en la apliación.");
         Scanner entrada = new Scanner (System.in);
-        System.out.println(" 1. Mis críticas\n 2. Películas compartidas conmigo\n 3. Criticas compartidas conmigo\n 4. Trivial\n 5. Volver");
+        System.out.println(" 1. Mis críticas\n 2. Películas\n 3. Criticas compartidas conmigo\n 4. Trivial\n 5. Volver");
         System.out.print ("Opcion: ");
         int opcion= entrada.nextInt(); 
         
@@ -400,7 +402,21 @@ public class practicapeliculas implements Serializable{
                     break;
                     
             case 2: 
-                    System.out.println(("Estas son las peliculas que tus amigos han compartido contigo"));
+                    System.out.println("Aqui podrás ver las peliculas que has subido tú o las que te han enviado");
+                    System.out.print("Elige una opción\n1. Peliculas subidas por mí\n2. Peliculas compartidas conmigo\n");
+                    System.out.print ("Opción: ");
+                    int opcion2= entrada.nextInt();
+                    switch(opcion2){
+                        case 1:
+                                System.out.println("Este es tu listado de pelis propio");
+                                peliculas.verInfoPeliculasPropias(u);
+                                funciones_Muro(u);
+                        
+                        case 2:
+                                System.out.println("Este es el listado de pelis que han compartido contigo");
+                                peliculas.verInfoPeliculasCompartidas(u);
+                                funciones_Muro(u);
+                    }
                     break;
             case 3: 
                     System.out.println("Estas son las críticas de las peliculas que tus amigos han compartido contigo");

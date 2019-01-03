@@ -14,7 +14,11 @@ import java.util.Scanner;
  */
 public class Peliculas {
     
-    private  ArrayList<Pelicula> peliculas;  
+    private ArrayList<Pelicula> peliculas;  
+    private ArrayList<Pelicula> peliculas_creadas;
+    private ArrayList<Pelicula> peliculas_compartidas;
+    
+    
     private  ArrayList<Critica> criticas;
     private  ArrayList<Critica> criticas_compartidas;
     //Usuario usuarios =new Usuario();
@@ -22,6 +26,8 @@ public class Peliculas {
     
     public Peliculas(){  
          peliculas = new ArrayList<Pelicula>(); 
+         peliculas_creadas = new ArrayList<Pelicula>();
+         peliculas_compartidas = new ArrayList<Pelicula>();
          criticas = new ArrayList<Critica>();
          criticas_compartidas = new ArrayList<Critica>();
      }
@@ -29,7 +35,12 @@ public class Peliculas {
     public ArrayList<Pelicula> getPeliculas(){
         return peliculas;
     }
-    
+    public ArrayList<Pelicula> getPeliculasCreadas(){
+        return peliculas_creadas;
+    }
+    public ArrayList<Pelicula> getPeliculasCompartidas(){
+        return peliculas_compartidas;
+    }
    public ArrayList<Critica> getCriticas(){
         return criticas;
     }
@@ -50,6 +61,29 @@ public class Peliculas {
              System.out.println("Pelicula añadida correctamente");
          }
          return sePuede;
+    }
+    public void anadirPeliculaPropia(Pelicula p, Usuario u){ //Comprueba si hay alguna peli con el mismo titulo y la añade si no existe
+         boolean sePuede=true;
+         for(Pelicula peli: u.peliculas.getPeliculasCreadas()){
+             if(peli.getTitulo().contains(p.getTitulo())){
+                 sePuede=false;
+             }
+         }
+         if(sePuede==true){
+             u.peliculas.getPeliculasCreadas().add(p);
+             System.out.println("Pelicula añadida correctamente a tu lista de pelis");
+         }
+    }
+    public void anadirPeliculaCompartida(Pelicula p, Usuario u){ //Comprueba si hay alguna peli con el mismo titulo y la añade si no existe
+         boolean sePuede=true;
+         for(Pelicula peli: u.peliculas.getPeliculasCompartidas()){
+             if(peli.getTitulo().contains(p.getTitulo())){
+                 sePuede=false;
+             }
+         }
+         if(sePuede==true){
+             u.peliculas.getPeliculasCompartidas().add(p);
+         }
     }
 
    
@@ -84,6 +118,72 @@ public class Peliculas {
 
             int cont2=0;
             for(Pelicula p:u.peliculas.getPeliculas()){
+                if(p.getTitulo().equals(titulo)){
+                    System.out.println(p);
+                    cont2++;
+                }
+            }    
+            if(cont2==0){
+                System.out.println("Titulo erroneo");
+            }      
+        }
+    }
+    
+    public void verInfoPeliculasPropias(Usuario u){ //Muestra la información de cada pelicula
+        int cont=0;
+        boolean sePuede=true;
+        if(u.peliculas.getPeliculasCreadas().isEmpty()){
+            System.out.println("No tienes peliculas");
+            System.out.println("Volviendo al menu");
+            sePuede=false;
+        }
+        
+        if(sePuede==true){
+            System.out.println("Tu lista de peliculas:");
+            for(Pelicula p: u.peliculas.getPeliculasCreadas()){
+                cont++;
+                System.out.println(cont+".-"+p.getTitulo());
+            }
+            System.out.println("¿De que peli quieres ver información?");   
+            Scanner pelicula = new Scanner(System.in);
+            System.out.println("Titulo de la pelicula:");
+            String titulo = pelicula.nextLine();
+
+            int cont2=0;
+            for(Pelicula p:u.peliculas.getPeliculasCreadas()){
+                if(p.getTitulo().equals(titulo)){
+                    System.out.println(p);
+                    cont2++;
+                }
+            }    
+            if(cont2==0){
+                System.out.println("Titulo erroneo");
+            }      
+        }
+    }
+    
+    public void verInfoPeliculasCompartidas(Usuario u){ //Muestra la información de cada pelicula
+        int cont=0;
+        boolean sePuede=true;
+        if(u.peliculas.getPeliculasCompartidas().isEmpty()){
+            System.out.println("No tienes peliculas");
+            System.out.println("Volviendo al menu");
+            sePuede=false;
+        }
+        
+        if(sePuede==true){
+            System.out.println("Tu lista de peliculas:");
+            for(Pelicula p: u.peliculas.getPeliculasCompartidas()){
+                cont++;
+                System.out.println(cont+".-"+p.getTitulo());
+            }
+            System.out.println("¿De que peli quieres ver información?");   
+            Scanner pelicula = new Scanner(System.in);
+            System.out.println("Titulo de la pelicula:");
+            String titulo = pelicula.nextLine();
+
+            int cont2=0;
+            for(Pelicula p:u.peliculas.getPeliculasCompartidas()){
                 if(p.getTitulo().equals(titulo)){
                     System.out.println(p);
                     cont2++;

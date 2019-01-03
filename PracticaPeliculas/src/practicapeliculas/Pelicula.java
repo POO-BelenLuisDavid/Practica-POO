@@ -29,18 +29,20 @@ public class Pelicula implements Serializable{
      }
     
     public Pelicula(String t, String d, String g, String a_m, String a_f, String a){
+            
+            aux++;
             this.titulo=t;
             this.director=d;
             this.genero=g;
             this.actor= a_m;
             this.actriz=a_f;
             this.año= a;
-            /*titulos[aux]=titulo;
+            titulos[aux]=titulo;
             directores[aux]=d;
             generos[aux]=g;
             actores[aux]=a_m;
             actrices[aux]=a_f;
-            años[aux]=a;*/
+            años[aux]=a;
     }
      
     public String getTitulo(){

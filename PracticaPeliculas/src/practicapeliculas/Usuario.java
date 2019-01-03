@@ -25,7 +25,8 @@ public class Usuario implements Serializable{
     Usuario solicitudes_amigos_pendientes[]=new Usuario[N];//solicitudes que yo recibo   
     ArrayList<Usuario> mis_amigos=new ArrayList<Usuario>(); //solicitudes que me han aceptado y que he aceptado yo
     ArrayList<Critica> criticas_compartidas=new ArrayList<Critica>();
-    //ArrayList<Pelicula> mis_peliculas =new ArrayList<Pelicula>();
+    
+
     String nick;
     String clave;
     
@@ -148,12 +149,12 @@ public class Usuario implements Serializable{
         muro.append(p);
         ArrayList<Pelicula> peliculasaux=this.peliculas.getPeliculas();
         int cont=0;
-        
         for(Pelicula peli: peliculasaux){
             if((p.getTitulo().equals(peli.getTitulo()))){  //podria añadir una restricción para que, en caso de que el amigo 
                 for(Usuario u: mis_amigos){                //ya tenga la peli entre sus pelis, salte un mensaje de error.
                     u.setMuro(muro);
-                    peliculas.anadirPelicula(peli,u);
+                    peliculas.anadirPelicula(peli,u);                    
+                    peliculas.anadirPeliculaCompartida(peli,u);
                     cont++;
                 }      
             }
@@ -166,6 +167,7 @@ public class Usuario implements Serializable{
     public void compartirPelicula(Pelicula p, Usuario u){
         muro.append(p);
         int cont=0;
+        int cont2=0;
         boolean sePuede=false;  
         boolean sePuede2=false;
         ArrayList<Pelicula> peliculasaux=this.peliculas.getPeliculas();
@@ -188,6 +190,10 @@ public class Usuario implements Serializable{
             if(sePuede2==true){
                 u.setMuro(muro);
                 peliculas.anadirPelicula(peli2, u);
+                cont2++;
+            }
+            if(cont2>0){
+                peliculas.anadirPeliculaCompartida(peli2, u);
             }
             if(cont==0){
                 System.out.println("Nombre de la peli incorrecto");
@@ -267,14 +273,14 @@ public class Usuario implements Serializable{
     public void anadirPelicula(Pelicula p, Usuario u){
         peliculas.anadirPelicula(p, u);
     }
+    public void anadirPeliculaPropia(Pelicula p, Usuario u){
+        peliculas.anadirPeliculaPropia(p, u);
+    }
     
     public void anadirCritica(Critica c, Pelicula p){
         peliculas.anadirCritica(c,p);
     }
     
-    /*public void mis_peliculas(Pelicula p, Usuario u){
-        mis_peliculas.add(p,u);
-    }*/
     
     public void iniciarPartida(Usuario u){
         
