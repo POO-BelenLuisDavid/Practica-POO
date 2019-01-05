@@ -5,6 +5,7 @@
  */
 package practicapeliculas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ import java.util.Scanner;
  *
  * @author Acer
  */
-public class Partida {
+public class Partida implements Serializable{
     
     
     Clasificacion clasificacion = new Clasificacion();

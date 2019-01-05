@@ -5,11 +5,13 @@
  */
 package practicapeliculas;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Acer
  */
-public class Critica {
+public class Critica implements Serializable{
     
     String pelicula, texto;
     double puntuacion;
