@@ -5,7 +5,6 @@
  */
 package practicapeliculas;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ import java.util.Scanner;
  *
  * @author Acer
  */
-public class Peliculas implements Serializable{
+public class Peliculas {
     
     private ArrayList<Pelicula> peliculas;  
     private ArrayList<Pelicula> peliculas_creadas;
@@ -39,28 +38,6 @@ public class Peliculas implements Serializable{
     public ArrayList<Pelicula> getPeliculasCreadas(){
         return peliculas_creadas;
     }
-    
-    public void setPeliculas(ArrayList<Pelicula> peliculas){
-        this.peliculas=peliculas;
-        
-    }
-    
-    public void setCriticas(ArrayList<Critica> criticas){
-        this.criticas=criticas;
-    }
-    
-    public void setCriticasCompartidas(ArrayList<Critica> criticas){
-        this.criticas_compartidas=criticas;
-    }
-    
-    public void setPeliculasCreadas(ArrayList<Pelicula> peliculascreadas){
-        this.peliculas_creadas=peliculascreadas;
-    }
-    
-    public void setPeliculasCompartidas(ArrayList<Pelicula> peliculasCompartidas){
-        this.peliculas_compartidas=peliculasCompartidas;
-    }
-    
     public ArrayList<Pelicula> getPeliculasCompartidas(){
         return peliculas_compartidas;
     }
@@ -239,16 +216,11 @@ public class Peliculas implements Serializable{
     
     public void listaCriticas(){ //Muestra una lista de los titulos de las criticas disponibles (para compartirlas)
         int cont=0;
-        if(criticas.isEmpty()){
-            System.out.println("Aun no hay críticas para compartir");
+        System.out.println("Tu lista de peliculas con criticas:");
+        for(Critica c: criticas){
+            cont++;
+            System.out.println(cont+".-"+c.getPelicula());
         }
-        else{
-            System.out.println("Tu lista de peliculas con criticas:");
-            for(Critica c: criticas){
-                cont++;
-                System.out.println(cont+".-"+c.getPelicula());
-            }
-        }        
     }
     
     public void criticasPelis(){ //Muestra la información de una crítica

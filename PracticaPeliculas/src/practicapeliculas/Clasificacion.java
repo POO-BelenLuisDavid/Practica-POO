@@ -52,7 +52,7 @@ public class Clasificacion {
         for(int i=0; i<clasi_nom.length; i++){
             copia[i]=clasi_nom[i];
         }
-        System.out.println("TODO OK");
+        //System.out.println("TODO OK");
         
         visualizar(copia);
         
