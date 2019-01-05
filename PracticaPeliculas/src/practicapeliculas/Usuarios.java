@@ -5,7 +5,6 @@
  */
 package practicapeliculas;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,19 +12,15 @@ import java.util.Scanner;
  *
  * @author Acer
  */
-public class Usuarios implements Serializable{
+public class Usuarios {
     
-     private static ArrayList<Usuario> lista_usuarios; 
+     private static ArrayList<Usuario> usuarios; 
      
      public Usuarios(){  
-         lista_usuarios = new ArrayList<Usuario>(); 
+         usuarios = new ArrayList<Usuario>(); 
      }
      public ArrayList<Usuario> getUsuarios(){
-         return lista_usuarios;
-     }
-     
-     public void setUsuarios(ArrayList<Usuario> usuarios){
-         Usuarios.lista_usuarios=usuarios;
+         return usuarios;
      }
      
      public Usuario autenticar() {
@@ -34,7 +29,7 @@ public class Usuarios implements Serializable{
         String login = entrada.nextLine();
         System.out.print("Password: ");
         String pass = entrada.nextLine();
-        for (Usuario u : lista_usuarios) {
+        for (Usuario u : usuarios) {
             if (u.getNick().equals(login) && u.getClave().equals(pass)) {
                 return u;
             }
@@ -46,13 +41,13 @@ public class Usuarios implements Serializable{
     public boolean registrar(Usuario nuevo) {
         
         boolean sePuede=true;
-        for(Usuario u: lista_usuarios){
+        for(Usuario u: usuarios){
             if(u.getNick().contains(nuevo.getNick())){
                 sePuede=false;
             }
         }
         if(sePuede==true){
-            this.lista_usuarios.add(nuevo);
+            this.usuarios.add(nuevo);
         }
         return sePuede;
         
