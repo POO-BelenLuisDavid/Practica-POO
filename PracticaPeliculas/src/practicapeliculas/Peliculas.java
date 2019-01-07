@@ -5,6 +5,7 @@
  */
 package practicapeliculas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ import java.util.Scanner;
  *
  * @author Acer
  */
-public class Peliculas {
+public class Peliculas implements Serializable{
     
     private ArrayList<Pelicula> peliculas;  
     private ArrayList<Pelicula> peliculas_creadas;
@@ -38,6 +39,28 @@ public class Peliculas {
     public ArrayList<Pelicula> getPeliculasCreadas(){
         return peliculas_creadas;
     }
+    
+    public void setPeliculas(ArrayList<Pelicula> peliculas){
+        this.peliculas=peliculas;
+        
+    }
+    
+    public void setCriticas(ArrayList<Critica> criticas){
+        this.criticas=criticas;
+    }
+    
+    public void setCriticasCompartidas(ArrayList<Critica> criticas){
+        this.criticas_compartidas=criticas;
+    }
+    
+    public void setPeliculasCreadas(ArrayList<Pelicula> peliculascreadas){
+        this.peliculas_creadas=peliculascreadas;
+    }
+    
+    public void setPeliculasCompartidas(ArrayList<Pelicula> peliculasCompartidas){
+        this.peliculas_compartidas=peliculasCompartidas;
+    }
+    
     public ArrayList<Pelicula> getPeliculasCompartidas(){
         return peliculas_compartidas;
     }

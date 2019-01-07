@@ -5,11 +5,13 @@
  */
 package practicapeliculas;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Acer
  */
-public class Item {
+public class Item implements Serializable{
     
     String nombreUsuario;
     int jugadas, ganadas, perdidas, ptos;

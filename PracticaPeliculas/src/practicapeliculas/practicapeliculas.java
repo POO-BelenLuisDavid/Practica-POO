@@ -5,6 +5,13 @@
  */
 package practicapeliculas;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,16 +22,16 @@ import java.util.Scanner;
  */
 public class practicapeliculas implements Serializable{
 
-    public static Usuarios usuarios= new Usuarios();
+    public static Usuarios usuarios;
     private static Usuario admin = new Usuario("Luis", "1234", 0, 0, 0);
     private static Usuario admin2 = new Usuario("Dani", "1234", 0, 0, 0);
-    public static Peliculas peliculas =new Peliculas();
-    //private static ArrayList<Usuario> usuario = new ArrayList<>(); 
+    public static Peliculas peliculas;
+    
     /**
      * @param args the command line arguments
      */
     
-    private static void acceder (){
+    private static void acceder () throws IOException, FileNotFoundException, ClassNotFoundException{
        
         Usuario u;  
         do{
@@ -36,7 +43,7 @@ public class practicapeliculas implements Serializable{
         System.out.print ("Bienvenido");
         opciones_perfil(u);
     }
-    private static void crearUsuario() {
+    private static void crearUsuario() throws IOException, FileNotFoundException, ClassNotFoundException {
         
         Scanner entrada = new Scanner (System.in);
         System.out.print ("Dime el nick: ");
@@ -57,7 +64,7 @@ public class practicapeliculas implements Serializable{
         }
     }
     
-    private static void opciones_perfil(Usuario u){
+    private static void opciones_perfil(Usuario u) throws IOException, FileNotFoundException, ClassNotFoundException{
         
         Scanner entrada = new Scanner (System.in);
         System.out.println("¿Qué deseas hacer?");
@@ -80,7 +87,7 @@ public class practicapeliculas implements Serializable{
         } 
     }
     
-    private static void funciones_Amigos(Usuario u){
+    private static void funciones_Amigos(Usuario u) throws IOException, FileNotFoundException, ClassNotFoundException{
 
         System.out.println("Mis amigos son:\n "+u.mis_amigos.toString()+"\n");
         Scanner entrada = new Scanner (System.in);
@@ -142,7 +149,7 @@ public class practicapeliculas implements Serializable{
         }
     }                         
 
-    private static void funciones_Peliculas(Usuario u){
+    private static void funciones_Peliculas(Usuario u) throws IOException, FileNotFoundException, ClassNotFoundException{
         
         System.out.println("--------------------------------");
         Pelicula p;
@@ -260,7 +267,7 @@ public class practicapeliculas implements Serializable{
     }
     
 
-    public static void modo_comparticion_pelicula(Usuario u,Pelicula p){
+    public static void modo_comparticion_pelicula(Usuario u,Pelicula p) throws IOException, FileNotFoundException, ClassNotFoundException{
         int cont=0;
         System.out.println("--------------------------------");
         Scanner entrada8= new Scanner(System.in);
@@ -298,7 +305,7 @@ public class practicapeliculas implements Serializable{
         }
     }
     
-    public static void modo_comparticion_critica(Critica c, Usuario u){
+    public static void modo_comparticion_critica(Critica c, Usuario u) throws IOException, FileNotFoundException, ClassNotFoundException{
         int cont=0;
         System.out.println("--------------------------------");
         Scanner entrada8= new Scanner(System.in);
@@ -338,7 +345,7 @@ public class practicapeliculas implements Serializable{
     }
 
 
-    private static void funciones_Trivial(Usuario u){
+    private static void funciones_Trivial(Usuario u) throws IOException, FileNotFoundException, ClassNotFoundException{
         Partida pa = new Partida();
         ArrayList<Pelicula> copia = u.peliculas.getPeliculas();
         
@@ -376,7 +383,7 @@ public class practicapeliculas implements Serializable{
                 opciones_perfil(u);
                 break;
             }
-            case 2: u.completarPartida(u,pa);
+            case 2: u.completarPartida(pa);
                     break;
             case 3: u.compartirPArtida(pa);//Mirar Esto
                     break;
@@ -387,7 +394,7 @@ public class practicapeliculas implements Serializable{
         } 
     }
     
-    private static void funciones_Muro(Usuario u){
+    private static void funciones_Muro(Usuario u) throws IOException, FileNotFoundException, ClassNotFoundException{
         System.out.println("Muro:\nAquí podrás ver tu actividad en la apliación.");
         Scanner entrada = new Scanner (System.in);
         System.out.println(" 1. Mis críticas\n 2. Películas\n 3. Criticas compartidas conmigo\n 4. Trivial\n 5. Volver");
@@ -434,7 +441,7 @@ public class practicapeliculas implements Serializable{
     }
     
     
-     private static void Cerrar_Sesion(Usuario u){
+     private static void Cerrar_Sesion(Usuario u) throws IOException, FileNotFoundException, ClassNotFoundException{
         
         System.out.println("--------------------------------");
         Scanner entrada3 = new Scanner (System.in);
@@ -444,8 +451,7 @@ public class practicapeliculas implements Serializable{
         int numero=entrada3.nextInt();
         
         switch(numero){
-            case 1:    System.out.println("Cerrando sesión...");
-                        Inicio_Sesion();
+            case 1:    GuardarFichero(usuarios, u.peliculas);
                         break;
             case 2:     System.out.println("Cancelando cierre de sesión");
                         opciones_perfil(u);
@@ -458,27 +464,38 @@ public class practicapeliculas implements Serializable{
         
     }
     
-    private static void tratarOpcion(int opcion) {
+    private static void tratarOpcion(int opcion) throws IOException, FileNotFoundException, ClassNotFoundException {
         
         switch (opcion) {
             
-            case 1: acceder ();
+            case 1: usuarios= new Usuarios(); 
+                    peliculas=new Peliculas();
+                    usuarios.registrar(admin);
+                    usuarios.registrar(admin2);
+                    acceder ();
                       break;
             
-            case 2: crearUsuario ();
+            case 2: usuarios= new Usuarios(); 
+                    peliculas=new Peliculas();
+                    usuarios.registrar(admin);
+                    usuarios.registrar(admin2);
+                    crearUsuario ();
                       break;
             
-            case 3: System.exit(0); //Implementar método salir para meter en él la opción de guardar todo en un fihero para luego poder cargarlo todo
-            
+            case 3: CargarFichero(); 
+                    break;
+            case 4: break;
+                    
             default: System.out.println ("Opcion no reconocida");
+                    break;
         }
     }
     
     
-     public static void Inicio_Sesion(){
+     public static void Inicio_Sesion() throws IOException, FileNotFoundException, ClassNotFoundException{
         int opcion;
         System.out.println ("¿Qué deseas hacer?");
-        System.out.println ("1- Acceder // 2- Registrarse // 3- Salir");
+        System.out.println ("1- Acceder // 2- Registrarse // 3- Cargar fichero // 4-Cerrar aplicacion");
         
         Scanner entrada = new Scanner (System.in);
         System.out.print ("Dime una opcion: ");
@@ -488,13 +505,49 @@ public class practicapeliculas implements Serializable{
             tratarOpcion (opcion);
     }
      
-    public static void main(String[] args) {
-        // TODO code application logic here
-            
+      public static void GuardarFichero(Usuarios u,Peliculas p) throws FileNotFoundException, IOException, ClassNotFoundException{
+         
+        /*Scanner entrada4 = new Scanner (System.in);
+        System.out.print("¿En qué fichero desea guardar la información?");
+        String fichero=entrada4.nextLine();*/
+        File fichero= new File("prueba.txt");
+         
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichero));
         
-        usuarios.registrar(admin);
-        usuarios.registrar(admin2);
-        
+        oos.writeObject(usuarios.getUsuarios());
+        oos.writeObject(peliculas.getPeliculas());
+        oos.writeObject(peliculas.getCriticas());
+        oos.writeObject(peliculas.getCriticasCompartidas());
+        oos.writeObject(peliculas.getPeliculasCompartidas());
+        oos.writeObject(peliculas.getPeliculasCreadas());
+       
+        oos.close();
+       
+        System.out.println("Cerrando sesión...");
         Inicio_Sesion();
+    }
+     
+      public static void CargarFichero()throws IOException,FileNotFoundException, ClassNotFoundException{
+            
+            File fichero= new File("prueba.txt");
+            ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(fichero));
+            
+            usuarios.setUsuarios((ArrayList <Usuario>)entrada.readObject());
+            peliculas.setPeliculas((ArrayList<Pelicula>)entrada.readObject());
+            peliculas.setCriticas((ArrayList<Critica>)entrada.readObject());
+            peliculas.setCriticasCompartidas((ArrayList<Critica>)entrada.readObject());
+            peliculas.setPeliculasCompartidas((ArrayList<Pelicula>)entrada.readObject());
+            peliculas.setPeliculasCreadas((ArrayList<Pelicula>)entrada.readObject());
+            
+            System.out.println("Fichero cargado con exito.\n");
+            Inicio_Sesion();
+            
+     }
+     
+    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
+        // TODO code application logic here
+                    
+        Inicio_Sesion();
+        
     }
 }
