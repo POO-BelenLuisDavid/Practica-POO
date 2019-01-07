@@ -482,7 +482,11 @@ public class practicapeliculas implements Serializable{
                     crearUsuario ();
                       break;
             
-            case 3: CargarFichero(); 
+            case 3: usuarios= new Usuarios(); 
+                    peliculas=new Peliculas();
+                    usuarios.registrar(admin);
+                    usuarios.registrar(admin2);
+                    CargarFichero(); 
                     break;
             case 4: break;
                     
