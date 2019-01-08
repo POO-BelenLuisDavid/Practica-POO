@@ -383,7 +383,14 @@ public class practicapeliculas implements Serializable{
                 opciones_perfil(u);
                 break;
             }
-            case 2: u.completarPartida(pa);
+            case 2: 
+                    if(u.partidas.isEmpty()){
+                        System.out.println("No tienes partidas pendientes");
+                    }
+                    else{
+                        u.completarPartida(u, pa);
+                    }
+                    opciones_perfil(u);
                     break;
             case 3: u.compartirPArtida(pa);//Mirar Esto
                     break;
@@ -451,7 +458,9 @@ public class practicapeliculas implements Serializable{
         int numero=entrada3.nextInt();
         
         switch(numero){
-            case 1:    GuardarFichero(usuarios, u.peliculas);
+            case 1:    //GuardarFichero(usuarios, u.peliculas);
+                        Inicio_Sesion();
+                        
                         break;
             case 2:     System.out.println("Cancelando cierre de sesión");
                         opciones_perfil(u);
@@ -482,11 +491,7 @@ public class practicapeliculas implements Serializable{
                     crearUsuario ();
                       break;
             
-            case 3: usuarios= new Usuarios(); 
-                    peliculas=new Peliculas();
-                    usuarios.registrar(admin);
-                    usuarios.registrar(admin2);
-                    CargarFichero(); 
+            case 3: CargarFichero(); 
                     break;
             case 4: break;
                     
@@ -509,11 +514,11 @@ public class practicapeliculas implements Serializable{
             tratarOpcion (opcion);
     }
      
-      public static void GuardarFichero(Usuarios u,Peliculas p) throws FileNotFoundException, IOException, ClassNotFoundException{
+      /*public static void GuardarFichero(Usuarios u,Peliculas p) throws FileNotFoundException, IOException, ClassNotFoundException{
          
         /*Scanner entrada4 = new Scanner (System.in);
         System.out.print("¿En qué fichero desea guardar la información?");
-        String fichero=entrada4.nextLine();*/
+        String fichero=entrada4.nextLine();
         File fichero= new File("prueba.txt");
          
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichero));
@@ -529,7 +534,7 @@ public class practicapeliculas implements Serializable{
        
         System.out.println("Cerrando sesión...");
         Inicio_Sesion();
-    }
+    }*/
      
       public static void CargarFichero()throws IOException,FileNotFoundException, ClassNotFoundException{
             

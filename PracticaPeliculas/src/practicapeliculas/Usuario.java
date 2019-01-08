@@ -5,9 +5,11 @@
  */
 package practicapeliculas;
 
+import static java.awt.AWTEventMulticaster.add;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -16,17 +18,17 @@ import java.util.Scanner;
  */
 public class Usuario implements Serializable{
     
-    int N=10;
+    int N=10, pos1, pos2, pos3, pos4, pos5, pos6;
     StringBuilder muro= new StringBuilder();
     Peliculas peliculas = new Peliculas();
     int partidas_ganadas, partidas_perdidas, partidas_empatadas;
-    Partida partidas_completas[], partidas_pendiente[];
+    ArrayList<Partida> partidas=new ArrayList<Partida>();
    
     Usuario solicitudes_amigos_pendientes[]=new Usuario[N];//solicitudes que yo recibo   
     ArrayList<Usuario> mis_amigos=new ArrayList<Usuario>(); //solicitudes que me han aceptado y que he aceptado yo
     ArrayList<Critica> criticas_compartidas=new ArrayList<Critica>();
     
-
+    ArrayList<Pelicula> pe = new ArrayList<Pelicula>();
     String nick;
     String clave;
     
@@ -295,28 +297,89 @@ public class Usuario implements Serializable{
         
         Partida pa = new Partida(); 
         pa.setJugador1(u);
-        ArrayList<Pelicula> pe = u.peliculas.getPeliculas();
-        
+        //ArrayList<Pelicula> pe = u.peliculas.getPeliculas();
+        Usuario rival= new Usuario();
+        pe = u.peliculas.getPeliculas();
         System.out.println("Partida iniciada por "+u.getNick());
         System.out.println();
+        Random posicion = new Random();
+        int pos = posicion.nextInt(mis_amigos.size());
+        //System.out.println("///////Posicion elegida: "+pos);
+        
+        for(Usuario us: mis_amigos){
+            rival=mis_amigos.get(pos);            
+        }
+        
+        pa.setJugador2(rival);
+        System.out.println("Tu rival es: "+ rival.getNick());
+        rival.partidas.add(pa);
+        System.out.println();
 
-        int pos1 = pa.posAleatoria(pe);
+        pos1 = pa.posAleatoria(pe);
         pa.pregunta(u,pe,pe.get(pos1).getTitulo(), pe.get(pos1).getDirector(), pe.get(pos1).getGenero(), pe.get(pos1).getActor(), pe.get(pos1).getActriz(), pe.get(pos1).getAño());
-        int pos2 = pa.posAleatoria(pe);
+        pos2 = pa.posAleatoria(pe);
         pa.pregunta(u,pe,pe.get(pos2).getTitulo(), pe.get(pos2).getDirector(), pe.get(pos2).getGenero(), pe.get(pos2).getActor(), pe.get(pos2).getActriz(), pe.get(pos2).getAño());
-        int pos3 = pa.posAleatoria(pe);
+        pos3 = pa.posAleatoria(pe);
         pa.pregunta(u,pe,pe.get(pos3).getTitulo(), pe.get(pos3).getDirector(), pe.get(pos3).getGenero(), pe.get(pos3).getActor(), pe.get(pos3).getActriz(), pe.get(pos3).getAño());
-        int pos4 = pa.posAleatoria(pe);
+        pos4 = pa.posAleatoria(pe);
         pa.pregunta(u,pe,pe.get(pos4).getTitulo(), pe.get(pos4).getDirector(), pe.get(pos4).getGenero(), pe.get(pos4).getActor(), pe.get(pos4).getActriz(), pe.get(pos4).getAño());
-        int pos5 = pa.posAleatoria(pe);
+        pos5 = pa.posAleatoria(pe);
         pa.pregunta(u,pe,pe.get(pos5).getTitulo(), pe.get(pos5).getDirector(), pe.get(pos5).getGenero(), pe.get(pos5).getActor(), pe.get(pos5).getActriz(), pe.get(pos5).getAño());
-        int pos6 = pa.posAleatoria(pe);
+        pos6 = pa.posAleatoria(pe);
         pa.pregunta(u,pe,pe.get(pos6).getTitulo(), pe.get(pos6).getDirector(), pe.get(pos6).getGenero(), pe.get(pos6).getActor(), pe.get(pos6).getActriz(), pe.get(pos6).getAño());
+        System.out.println();
+        System.out.print("Has sacado "+pa.getPuntosJugador1()+" puntos");
+        System.out.println();
+        
         
     }
-    public void completarPartida(Partida p){
+    public void completarPartida(Usuario u, Partida pa){
         
-        p.setJugador2(this);
+        pe = u.peliculas.getPeliculas();
+        //Partida pa=new Partida();
+        System.out.println("-----PARTIDAS PENDIENTES-----");
+        System.out.println();
+        for(Partida par: partidas){
+            System.out.println(par.jugador1.getNick());
+        }
+        System.out.println();
+        
+        System.out.println("1. Completar partida   2.  Volver");
+        System.out.println("(las partidas se completan en orden descendente)");
+        System.out.print("Opcion: ");
+        Scanner entrada = new Scanner(System.in);
+        int opcion = entrada.nextInt();
+        
+        
+        switch(opcion){
+            
+            case 1: System.out.println();
+                    System.out.println("Vas a completar la partida de "+partidas.get(0));
+                    
+                    pos1 = pa.posAleatoria(pe);
+                    pa.pregunta2(u,pe,pe.get(pos1).getTitulo(), pe.get(pos1).getDirector(), pe.get(pos1).getGenero(), pe.get(pos1).getActor(), pe.get(pos1).getActriz(), pe.get(pos1).getAño());
+                    pos2 = pa.posAleatoria(pe);
+                    pa.pregunta2(u,pe,pe.get(pos2).getTitulo(), pe.get(pos2).getDirector(), pe.get(pos2).getGenero(), pe.get(pos2).getActor(), pe.get(pos2).getActriz(), pe.get(pos2).getAño());
+                    pos3 = pa.posAleatoria(pe);
+                    pa.pregunta2(u,pe,pe.get(pos3).getTitulo(), pe.get(pos3).getDirector(), pe.get(pos3).getGenero(), pe.get(pos3).getActor(), pe.get(pos3).getActriz(), pe.get(pos3).getAño());
+                    pos4 = pa.posAleatoria(pe);
+                    pa.pregunta2(u,pe,pe.get(pos4).getTitulo(), pe.get(pos4).getDirector(), pe.get(pos4).getGenero(), pe.get(pos4).getActor(), pe.get(pos4).getActriz(), pe.get(pos4).getAño());       
+                    pos5 = pa.posAleatoria(pe);
+                    pa.pregunta2(u,pe,pe.get(pos5).getTitulo(), pe.get(pos5).getDirector(), pe.get(pos5).getGenero(), pe.get(pos5).getActor(), pe.get(pos5).getActriz(), pe.get(pos5).getAño()); 
+                    pos6 = pa.posAleatoria(pe);
+                    pa.pregunta2(u,pe,pe.get(pos6).getTitulo(), pe.get(pos6).getDirector(), pe.get(pos6).getGenero(), pe.get(pos6).getActor(), pe.get(pos6).getActriz(), pe.get(pos6).getAño());
+                    partidas.remove(0);
+                    System.out.println();
+                    System.out.println("Has sacado "+pa.getPuntosJugador2()+" puntos");
+                    System.out.println();
+                    //System.out.println("Ganador: "+pa.getResultadoFinal());
+                    System.out.println();
+                    break;
+                    
+            case 2: break;
+            default: System.out.println("Opcion no válida");
+        }
+        
         
         
     }
