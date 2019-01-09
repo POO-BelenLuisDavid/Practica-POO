@@ -26,7 +26,7 @@ public class practicapeliculas implements Serializable{
     private static Usuario admin = new Usuario("Luis", "1234", 0, 0, 0);
     private static Usuario admin2 = new Usuario("Dani", "1234", 0, 0, 0);
     public static Peliculas peliculas;
-     public static boolean fichero_cargado=false;
+    public static boolean fichero_cargado=false;
     
     /**
      * @param args the command line arguments
@@ -426,11 +426,13 @@ public class practicapeliculas implements Serializable{
                                 System.out.println("Este es tu listado de pelis propio");
                                 peliculas.verInfoPeliculasPropias(u);
                                 funciones_Muro(u);
+                                break;
                         
                         case 2:
                                 System.out.println("Este es el listado de pelis que han compartido contigo");
                                 peliculas.verInfoPeliculasCompartidas(u);
                                 funciones_Muro(u);
+                                break;
                     }
                     break;
             case 3: 
@@ -444,6 +446,7 @@ public class practicapeliculas implements Serializable{
                     break;                   
             case 5:
                     opciones_perfil(u);
+                    break;
             default: System.out.println ("Opcion no reconocida");
         } 
     }
