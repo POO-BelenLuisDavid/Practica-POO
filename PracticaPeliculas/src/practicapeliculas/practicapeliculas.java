@@ -26,6 +26,7 @@ public class practicapeliculas implements Serializable{
     private static Usuario admin = new Usuario("Luis", "1234", 0, 0, 0);
     private static Usuario admin2 = new Usuario("Dani", "1234", 0, 0, 0);
     public static Peliculas peliculas;
+    public static boolean fichero_cargado=false;
     
     /**
      * @param args the command line arguments
@@ -54,6 +55,7 @@ public class practicapeliculas implements Serializable{
         Usuario nuevo = new Usuario (nick, pass, 0, 0, 0);
        
         boolean sePuede = usuarios.registrar(nuevo);
+        System.out.println(usuarios.getUsuarios());
         if (sePuede){
             System.out.println ("Usuario creado correctamente");
             System.out.println ("Ahora inicia sesión");
@@ -383,14 +385,7 @@ public class practicapeliculas implements Serializable{
                 opciones_perfil(u);
                 break;
             }
-            case 2: 
-                    if(u.partidas.isEmpty()){
-                        System.out.println("No tienes partidas pendientes");
-                    }
-                    else{
-                        u.completarPartida(u, pa);
-                    }
-                    opciones_perfil(u);
+            case 2: u.completarPartida(pa);
                     break;
             case 3: u.compartirPArtida(pa);//Mirar Esto
                     break;
@@ -458,9 +453,8 @@ public class practicapeliculas implements Serializable{
         int numero=entrada3.nextInt();
         
         switch(numero){
-            case 1:    //GuardarFichero(usuarios, u.peliculas);
-                        Inicio_Sesion();
-                        
+            case 1:    GuardarFichero(usuarios, u.peliculas);
+                        fichero_cargado=false;
                         break;
             case 2:     System.out.println("Cancelando cierre de sesión");
                         opciones_perfil(u);
@@ -477,10 +471,13 @@ public class practicapeliculas implements Serializable{
         
         switch (opcion) {
             
-            case 1: usuarios= new Usuarios(); 
+            case 1: if(!fichero_cargado){
+                    usuarios= new Usuarios();
                     peliculas=new Peliculas();
                     usuarios.registrar(admin);
                     usuarios.registrar(admin2);
+                    } 
+                    
                     acceder ();
                       break;
             
@@ -491,7 +488,9 @@ public class practicapeliculas implements Serializable{
                     crearUsuario ();
                       break;
             
-            case 3: CargarFichero(); 
+            case 3: usuarios= new Usuarios(); 
+                    peliculas=new Peliculas();
+                    CargarFichero(); 
                     break;
             case 4: break;
                     
@@ -514,11 +513,11 @@ public class practicapeliculas implements Serializable{
             tratarOpcion (opcion);
     }
      
-      /*public static void GuardarFichero(Usuarios u,Peliculas p) throws FileNotFoundException, IOException, ClassNotFoundException{
+      public static void GuardarFichero(Usuarios u,Peliculas p) throws FileNotFoundException, IOException, ClassNotFoundException{
          
         /*Scanner entrada4 = new Scanner (System.in);
         System.out.print("¿En qué fichero desea guardar la información?");
-        String fichero=entrada4.nextLine();
+        String fichero=entrada4.nextLine();*/
         File fichero= new File("prueba.txt");
          
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichero));
@@ -534,7 +533,7 @@ public class practicapeliculas implements Serializable{
        
         System.out.println("Cerrando sesión...");
         Inicio_Sesion();
-    }*/
+    }
      
       public static void CargarFichero()throws IOException,FileNotFoundException, ClassNotFoundException{
             
@@ -549,6 +548,7 @@ public class practicapeliculas implements Serializable{
             peliculas.setPeliculasCreadas((ArrayList<Pelicula>)entrada.readObject());
             
             System.out.println("Fichero cargado con exito.\n");
+            fichero_cargado=true;
             Inicio_Sesion();
             
      }

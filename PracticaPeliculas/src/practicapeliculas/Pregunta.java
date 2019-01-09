@@ -16,6 +16,11 @@ public class Pregunta implements Serializable{
     int id, puntos_jugador_1, puntos_jugador_2;
     Pelicula pelicula;
     
-
+    public void seleccionarPelicula(Peliculas films){
+        
+    }
+    public void ofrecerNuevaPista(){
+        
+    }
     
 }
