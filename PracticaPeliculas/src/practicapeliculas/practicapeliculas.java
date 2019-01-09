@@ -189,7 +189,7 @@ public class practicapeliculas implements Serializable{
             case 2: 
                     Scanner entrada6 = new Scanner (System.in);
                     System.out.println("¿De qué modo desea compartir?");
-                    System.out.print("1. Compartir pelicula\n2. Compartir todo\nOpción:");
+                    System.out.print("1. Compartir pelicula\n2. Compartir todas las peliculas\nOpción:");
                     int opcion_compartir=entrada6.nextInt();
                     switch(opcion_compartir){
                         case 1:  
@@ -203,7 +203,9 @@ public class practicapeliculas implements Serializable{
                                 modo_comparticion_pelicula(u,pe);
                                 break;
                                   
-                        case 2://(por hacer)no se como enfocarlo
+                        case 2:
+                                Pelicula pe2=null;
+                                modo_comparticion_pelicula(u,pe2);
                             
                         default:System.out.println("Por favor, seleccione una opción correcta");
                                 funciones_Peliculas(u);
@@ -433,6 +435,7 @@ public class practicapeliculas implements Serializable{
                                 peliculas.verInfoPeliculasCompartidas(u);
                                 funciones_Muro(u);
                                 break;
+                        default: System.out.println ("Opcion no reconocida");
                     }
                     break;
             case 3: 

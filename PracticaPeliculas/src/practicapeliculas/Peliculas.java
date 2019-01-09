@@ -315,6 +315,7 @@ public class Peliculas implements Serializable{
             if(cont2==0){
                     System.out.println("Error al introducir el nombre de la pelicula");
                 }
-        }
+        }     
+    }
 }
     
