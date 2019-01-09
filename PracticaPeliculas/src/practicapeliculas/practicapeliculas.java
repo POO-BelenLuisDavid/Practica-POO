@@ -502,6 +502,7 @@ public class practicapeliculas implements Serializable{
                     
             default: System.out.println ("Opcion no reconocida");
                     break;
+        }
     }
     
     
@@ -517,6 +518,7 @@ public class practicapeliculas implements Serializable{
        if(opcion!=0)
             tratarOpcion (opcion);
     }
+
      
       public static void GuardarFichero(Usuarios u,Peliculas p) throws FileNotFoundException, IOException, ClassNotFoundException{
          
