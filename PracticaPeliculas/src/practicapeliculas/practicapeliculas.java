@@ -26,7 +26,7 @@ public class practicapeliculas implements Serializable{
     private static Usuario admin = new Usuario("Luis", "1234", 0, 0, 0);
     private static Usuario admin2 = new Usuario("Dani", "1234", 0, 0, 0);
     public static Peliculas peliculas;
-    public static boolean fichero_cargado=false;
+     public static boolean fichero_cargado=false;
     
     /**
      * @param args the command line arguments
@@ -55,7 +55,6 @@ public class practicapeliculas implements Serializable{
         Usuario nuevo = new Usuario (nick, pass, 0, 0, 0);
        
         boolean sePuede = usuarios.registrar(nuevo);
-        System.out.println(usuarios.getUsuarios());
         if (sePuede){
             System.out.println ("Usuario creado correctamente");
             System.out.println ("Ahora inicia sesión");
@@ -385,7 +384,14 @@ public class practicapeliculas implements Serializable{
                 opciones_perfil(u);
                 break;
             }
-            case 2: u.completarPartida(pa);
+            case 2: 
+                    if(u.partidas.isEmpty()){
+                        System.out.println("No tienes partidas pendientes");
+                    }
+                    else{
+                        u.completarPartida(u, pa);
+                    }
+                    opciones_perfil(u);
                     break;
             case 3: u.compartirPArtida(pa);//Mirar Esto
                     break;
@@ -496,7 +502,6 @@ public class practicapeliculas implements Serializable{
                     
             default: System.out.println ("Opcion no reconocida");
                     break;
-        }
     }
     
     
