@@ -6,12 +6,13 @@
 package practicapeliculas;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  *
  * @author Acer
  */
-public class Clasificacion {
+public class Clasificacion implements Serializable {
     
     private int N=20, orden=0;
     private String[] clasi_nom;

@@ -26,7 +26,7 @@ public class practicapeliculas implements Serializable{
     private static Usuario admin = new Usuario("Luis", "1234", 0, 0, 0);
     private static Usuario admin2 = new Usuario("Dani", "1234", 0, 0, 0);
     public static Peliculas peliculas;
-    public static boolean fichero_cargado=false;
+     public static boolean fichero_cargado=false;
     
     /**
      * @param args the command line arguments
@@ -189,7 +189,7 @@ public class practicapeliculas implements Serializable{
             case 2: 
                     Scanner entrada6 = new Scanner (System.in);
                     System.out.println("¿De qué modo desea compartir?");
-                    System.out.print("1. Compartir pelicula\n2. Compartir todas las peliculas\nOpción:");
+                    System.out.print("1. Compartir pelicula\n2. Compartir todo\nOpción:");
                     int opcion_compartir=entrada6.nextInt();
                     switch(opcion_compartir){
                         case 1:  
@@ -203,9 +203,7 @@ public class practicapeliculas implements Serializable{
                                 modo_comparticion_pelicula(u,pe);
                                 break;
                                   
-                        case 2:
-                                Pelicula pe2=null;
-                                modo_comparticion_pelicula(u,pe2);
+                        case 2://(por hacer)no se como enfocarlo
                             
                         default:System.out.println("Por favor, seleccione una opción correcta");
                                 funciones_Peliculas(u);
@@ -428,14 +426,11 @@ public class practicapeliculas implements Serializable{
                                 System.out.println("Este es tu listado de pelis propio");
                                 peliculas.verInfoPeliculasPropias(u);
                                 funciones_Muro(u);
-                                break;
                         
                         case 2:
                                 System.out.println("Este es el listado de pelis que han compartido contigo");
                                 peliculas.verInfoPeliculasCompartidas(u);
                                 funciones_Muro(u);
-                                break;
-                        default: System.out.println ("Opcion no reconocida");
                     }
                     break;
             case 3: 
@@ -449,7 +444,6 @@ public class practicapeliculas implements Serializable{
                     break;                   
             case 5:
                     opciones_perfil(u);
-                    break;
             default: System.out.println ("Opcion no reconocida");
         } 
     }
@@ -493,10 +487,12 @@ public class practicapeliculas implements Serializable{
                     acceder ();
                       break;
             
-            case 2: usuarios= new Usuarios(); 
+            case 2: if(!fichero_cargado){
+                    usuarios= new Usuarios();
                     peliculas=new Peliculas();
                     usuarios.registrar(admin);
                     usuarios.registrar(admin2);
+                    } 
                     crearUsuario ();
                       break;
             
