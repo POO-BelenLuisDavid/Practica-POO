@@ -161,6 +161,16 @@ public class Usuario implements Serializable{
                 }      
             }
         }
+        if(p==null){
+            for(Pelicula peli:peliculasaux){
+                for(Usuario u: mis_amigos){                
+                    u.setMuro(muro);
+                    peliculas.anadirPelicula(peli,u);                    
+                    peliculas.anadirPeliculaCompartida(peli,u);
+                    cont++;
+                }                
+            }
+        }
         if(cont==0){
             System.out.println("Nombre de la peli incorrecto");
         }
@@ -180,26 +190,35 @@ public class Usuario implements Serializable{
                 sePuede=true;
             }
         }
-        if(sePuede==true){
-            for(Pelicula peli: peliculasaux ){
-                if(p.getTitulo().equals(peli.getTitulo())){  //podria añadir una restricción para que, en caso de que el amigo 
-                    sePuede2=true;                             //ya tenga la peli entre sus pelis, salte un mensaje de error.
-                    cont++;
-                    peli2=peli;
-                    break;
+        if(p==null){
+            for(Pelicula peli:peliculasaux){
+                peliculas.anadirPelicula(peli, u);
                 }
-            }
-            if(sePuede2==true){
-                u.setMuro(muro);
-                peliculas.anadirPelicula(peli2, u);
-                cont2++;
-            }
-            if(cont2>0){
-                peliculas.anadirPeliculaCompartida(peli2, u);
-            }
-            if(cont==0){
-                System.out.println("Nombre de la peli incorrecto");
-            }
+            for(Pelicula peli:peliculasaux){
+                peliculas.anadirPeliculaCompartida(peli,u);
+                } 
+        }else{
+            if(sePuede==true){
+                for(Pelicula peli: peliculasaux ){
+                    if(p.getTitulo().equals(peli.getTitulo())){  //podria añadir una restricción para que, en caso de que el amigo 
+                        sePuede2=true;                             //ya tenga la peli entre sus pelis, salte un mensaje de error.
+                        cont++;
+                        peli2=peli;
+                        break;
+                    }
+                }
+                if(sePuede2==true){
+                    u.setMuro(muro);
+                    peliculas.anadirPelicula(peli2, u);
+                    cont2++;
+                }
+                if(cont2>0){
+                    peliculas.anadirPeliculaCompartida(peli2, u);
+                }
+                if(cont==0){
+                    System.out.println("Nombre de la peli incorrecto");
+                }
+            }        
         }
     }
     
@@ -256,14 +275,14 @@ public class Usuario implements Serializable{
             }
     }
     
-    public void compartirPArtida(Partida p){
+    public void compartirPArtida(Partida p){ //Al no haber podido terminar la clasificación, esta función no la hemos implementado
         
     }
-    public void compartirPArtida(Partida p, Usuario u){
+    public void compartirPArtida(Partida p, Usuario u){//Al no haber podido terminar la clasificación, esta función no la hemos implementado
         
     }
     
-    public void compartirTodo(){
+    public void compartirTodo(){//Al no haber podido terminar la clasificación, esta función no la hemos implementado
         
         for(Critica c: peliculas.getCriticas()){
             compartirCritica(c);     
@@ -276,7 +295,7 @@ public class Usuario implements Serializable{
         //FALTA PARTIDA.
         
     }
-    public void compartirTodo(Usuario u){
+    public void compartirTodo(Usuario u){//Al no haber podido terminar la clasificación, esta función no la hemos implementado
         
        
     }

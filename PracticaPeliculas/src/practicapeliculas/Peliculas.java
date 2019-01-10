@@ -248,31 +248,34 @@ public class Peliculas implements Serializable{
     
     public void criticasPelis(){ //Muestra la información de una crítica
         int cont=0;
+        int cont1=0;
         int cont2=0;
-        for(Pelicula p: peliculas){
-            cont++;
-            System.out.println(cont+".-"+p.getTitulo());
-        }
-        System.out.println("¿De que peli quieres ver la crítica?"); 
-        Scanner pelicula = new Scanner(System.in);
-        System.out.println("Titulo de la pelicula:");
-        String titulo = pelicula.nextLine();
+        if(!criticas.isEmpty()){
+            for(Critica c: criticas){
+                cont++;
+                System.out.println(cont+".-"+c.getPelicula());
+            }
+            System.out.println("¿De que peli quieres ver la crítica?"); 
+            Scanner pelicula = new Scanner(System.in);
+            System.out.println("Titulo de la pelicula:");
+            String titulo = pelicula.nextLine();
         
-        for(Critica c: criticas){
-            if(!criticas.isEmpty()){
-                if(c.getPelicula().equals(titulo)){
-                    System.out.println(c);
-                    cont2++;
-                }
-                else{
-                    System.out.println("Esta peli no existe o aun no tiene critica");
-                    cont2++;
-                }   
-            }        
-        }
-        if(cont2==0){//Este else no funciona
-            System.out.println("Aun no hay criticas registradas");
-        }
+            for(Critica c: criticas){
+                if(!criticas.isEmpty()){
+                    if(c.getPelicula().equals(titulo)){
+                        System.out.println(c);
+                        cont1++;
+                        cont2++;
+                    }   
+                }        
+            }
+            if(cont1==0){
+                System.out.println("Esta peli no existe o aun no tiene critica");
+                cont2++;
+            }
+        }else {
+            System.out.println("Aun no has hecho la crítica de ninguna película");
+        } 
     }
     
     public void anadirCriticaCompartida(Critica c, Usuario u){ //Añade una critica que un usuario comparte con otro
@@ -286,29 +289,29 @@ public class Peliculas implements Serializable{
     public void listaCriticasCompartidas(Usuario u){ //Lista de criticas que un usuario comparte con otro
         int cont=0;
         int cont2=0;
-        System.out.println("Tu lista de criticas compartidas:");
-        for(Critica c:u.criticas_compartidas){
-            cont++;
-            System.out.println(cont+".-"+c.getPelicula());
-        }
-        if(cont==0){
+        if(u.criticas_compartidas.isEmpty()){
             System.out.println("Aun no han compartido críticas contigo");
-        }
+        }else{
+            System.out.println("Tu lista de criticas compartidas:");
+            for(Critica c:u.criticas_compartidas){
+                System.out.println(cont+".-"+c.getPelicula());
+            }
+            System.out.println("¿De que peli quieres ver la crítica?"); 
+            Scanner pelicula = new Scanner(System.in);
+            System.out.println("Titulo de la pelicula:");
+            String titulo = pelicula.nextLine();
 
-        System.out.println("¿De que peli quieres ver la crítica?"); 
-        Scanner pelicula = new Scanner(System.in);
-        System.out.println("Titulo de la pelicula:");
-        String titulo = pelicula.nextLine();
-        
-        for(Critica c: u.criticas_compartidas){
-            if(c.getPelicula().equals(titulo)){
-                System.out.println(c);
-                cont2++;
-            } 
-        }
-        if(cont2==0){
-                System.out.println("Error al introducir el nombre de la pelicula");
+            for(Critica c: u.criticas_compartidas){
+                if(c.getPelicula().equals(titulo)){
+                    System.out.println(c);
+                    cont2++;
+                } 
+            }
+            if(cont2==0){
+                    System.out.println("Error al introducir el nombre de la pelicula");
             }  
+        }
+          
     }
 }
     
