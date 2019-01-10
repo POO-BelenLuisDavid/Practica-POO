@@ -239,11 +239,15 @@ public class Peliculas implements Serializable{
     
     public void listaCriticas(){ //Muestra una lista de los titulos de las criticas disponibles (para compartirlas)
         int cont=0;
-        System.out.println("Tu lista de peliculas con criticas:");
-        for(Critica c: criticas){
-            cont++;
-            System.out.println(cont+".-"+c.getPelicula());
-        }
+        if(criticas.isEmpty()){
+            System.out.println("Aún no has hecho ninguna crítica");
+        }else{
+           System.out.println("Tu lista de peliculas con criticas:");
+            for(Critica c: criticas){
+                cont++;
+                System.out.println(cont+".-"+c.getPelicula());
+            } 
+        } 
     }
     
     public void criticasPelis(){ //Muestra la información de una crítica
@@ -287,7 +291,7 @@ public class Peliculas implements Serializable{
     }
     
     public void listaCriticasCompartidas(Usuario u){ //Lista de criticas que un usuario comparte con otro
-        int cont=0;
+        int cont=1;
         int cont2=0;
         if(u.criticas_compartidas.isEmpty()){
             System.out.println("Aun no han compartido críticas contigo");

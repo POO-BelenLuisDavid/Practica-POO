@@ -206,6 +206,7 @@ public class practicapeliculas implements Serializable{
                         case 2:
                                 Pelicula pe2=null;
                                 modo_comparticion_pelicula(u,pe2);
+                                break;
                             
                         default:System.out.println("Por favor, seleccione una opción correcta");
                                 funciones_Peliculas(u);
@@ -250,7 +251,10 @@ public class practicapeliculas implements Serializable{
                                 
                         case 2:
                                 System.out.println("Este es tu listado de críticas actualmente disponibles");
-                                u.peliculas.listaCriticas();                     
+                                u.peliculas.listaCriticas();  
+                                if(u.peliculas.getCriticas().isEmpty()){
+                                    break;
+                                }
                                 System.out.print ("Dime el titulo de la pelicula: ");
                                 Scanner entrada = new Scanner (System.in);
                                 String titulo1 = entrada.nextLine();
@@ -474,8 +478,7 @@ public class practicapeliculas implements Serializable{
                         break;
             default:    System.out.println("Por favor, seleccione una opción correcta");
                         Cerrar_Sesion(u);
-                        break;
-                        
+                        break;                       
         }
         
     }
@@ -531,9 +534,6 @@ public class practicapeliculas implements Serializable{
      
       public static void GuardarFichero(Usuarios u,Peliculas p) throws FileNotFoundException, IOException, ClassNotFoundException{
          
-        /*Scanner entrada4 = new Scanner (System.in);
-        System.out.print("¿En qué fichero desea guardar la información?");
-        String fichero=entrada4.nextLine();*/
         File fichero= new File("prueba.txt");
          
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichero));
