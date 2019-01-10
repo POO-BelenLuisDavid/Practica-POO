@@ -151,16 +151,6 @@ public class Usuario implements Serializable{
         muro.append(p);
         ArrayList<Pelicula> peliculasaux=this.peliculas.getPeliculas();
         int cont=0;
-        for(Pelicula peli: peliculasaux){
-            if((p.getTitulo().equals(peli.getTitulo()))){  //podria añadir una restricción para que, en caso de que el amigo 
-                for(Usuario u: mis_amigos){                //ya tenga la peli entre sus pelis, salte un mensaje de error.
-                    u.setMuro(muro);
-                    peliculas.anadirPelicula(peli,u);                    
-                    peliculas.anadirPeliculaCompartida(peli,u);
-                    cont++;
-                }      
-            }
-        }
         if(p==null){
             for(Pelicula peli:peliculasaux){
                 for(Usuario u: mis_amigos){                
@@ -170,11 +160,24 @@ public class Usuario implements Serializable{
                     cont++;
                 }                
             }
-        }
-        if(cont==0){
-            System.out.println("Nombre de la peli incorrecto");
+        }else{
+            for(Pelicula peli: peliculasaux){
+                if((peli.getTitulo().equals(p.getTitulo()))){  //podria añadir una restricción para que, en caso de que el amigo 
+                    for(Usuario u: mis_amigos){                //ya tenga la peli entre sus pelis, salte un mensaje de error.
+                        u.setMuro(muro);
+                        peliculas.anadirPelicula(peli,u);                    
+                        peliculas.anadirPeliculaCompartida(peli,u);
+                        cont++;
+                    }      
+                }
+            }
+            if(cont==0){
+                System.out.println("Nombre de la peli incorrecto");
+            }
         }
     }
+        
+        
     
     public void compartirPelicula(Pelicula p, Usuario u){
         muro.append(p);
